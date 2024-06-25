@@ -1,0 +1,1980 @@
+[{
+  "_id": "5c20abb783800e071098c1da",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AR",
+  "languageName": "Akan"
+},
+{
+  "_id": "5c20abb783800e071098c1d8",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AB",
+  "languageName": "Afar"
+},
+{
+  "_id": "5c20abb783800e071098c1dd",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "BE",
+  "languageName": "Arabic"
+},
+{
+  "_id": "5c20abb783800e071098c1ea",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "CV",
+  "languageName": "Aragonese"
+},
+{
+  "_id": "5c20abb783800e071098c1ee",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "DV",
+  "languageName": "Assamese"
+},
+{
+  "_id": "5c20abb783800e071098c1f0",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "EE",
+  "languageName": "Avestan"
+},
+{
+  "_id": "5c20abb783800e071098c1f1",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "EL",
+  "languageName": "Aymara"
+},
+{
+  "_id": "5c20abb783800e071098c202",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HY",
+  "languageName": "Bodo"
+},
+{
+  "_id": "5c20abb783800e071098c203",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "IA",
+  "languageName": "Bosnian"
+},
+{
+  "_id": "5c20abb783800e071098c205",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "II",
+  "languageName": "Breton"
+},
+{
+  "_id": "5c20abb783800e071098c20a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KHA",
+  "languageName": "Chamorro"
+},
+{
+  "_id": "5c20abb783800e071098c20b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KI",
+  "languageName": "Chechen"
+},
+{
+  "_id": "5c20abb783800e071098c216",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MG",
+  "languageName": "Chuvash"
+},
+{
+  "_id": "5c20abb783800e071098c21b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NA",
+  "languageName": "Czech"
+},
+{
+  "_id": "5c20abb783800e071098c221",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "OJ",
+  "languageName": "Dutch"
+},
+{
+  "_id": "5c20abb783800e071098c231",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SW",
+  "languageName": "Filipino"
+},
+{
+  "_id": "5c20abb783800e071098c233",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TH",
+  "languageName": "Flemish"
+},
+{
+  "_id": "5c20abb783800e071098c250",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MAL",
+  "languageName": "Fulah"
+},
+{
+  "_id": "5c20abb783800e071098c251",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MLD",
+  "languageName": "Galician"
+},
+{
+  "_id": "5c20abb783800e071098c25a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "BG",
+  "languageName": "Guarani"
+},
+{
+  "_id": "5c20abb783800e071098c25e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES",
+  "languageName": "Hausa"
+},
+{
+  "_id": "5c20abb783800e071098c263",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FI",
+  "languageName": "Hiri Motu"
+},
+{
+  "_id": "5c20abb783800e071098c266",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HU",
+  "languageName": "Icelandic"
+},
+{
+  "_id": "5c20abb783800e071098c274",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KU",
+  "languageName": "Japanese"
+},
+{
+  "_id": "5c20abb783800e071098c275",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KW",
+  "languageName": "Javanese"
+},
+{
+  "_id": "5c20abb783800e071098c276",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "LA",
+  "languageName": "Kalaallisut"
+},
+{
+  "_id": "5c20abb783800e071098c277",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "LG",
+  "languageName": "Kannada"
+},
+{
+  "_id": "5c20abb783800e071098c27e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MN",
+  "languageName": "Kinyarwanda"
+},
+{
+  "_id": "5c20abb783800e071098c288",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "OM",
+  "languageName": "languageName"
+},
+{
+  "_id": "5c20abb783800e071098c289",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "OS",
+  "languageName": "Lao"
+},
+{
+  "_id": "5c20abb783800e071098c28c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "PNAR",
+  "languageName": "Limburgish"
+},
+{
+  "_id": "5c20abb783800e071098c294",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SL",
+  "languageName": "Luxembourgish"
+},
+{
+  "_id": "5c20abb783800e071098c297",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SR",
+  "languageName": "Malagasy"
+},
+{
+  "_id": "5c20abb783800e071098c29b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TG",
+  "languageName": "Maldivian"
+},
+{
+  "_id": "5c20abb783800e071098c29d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TL",
+  "languageName": "Manipuri"
+},
+{
+  "_id": "5c20abb783800e071098c29e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TO",
+  "languageName": "Manx"
+},
+{
+  "_id": "5c20abb783800e071098c2a0",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TY",
+  "languageName": "Marathi"
+},
+{
+  "_id": "5c20abb783800e071098c2a1",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "UK",
+  "languageName": "Marshallese"
+},
+{
+  "_id": "5c20abb783800e071098c2a5",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "XH",
+  "languageName": "Nauru"
+},
+{
+  "_id": "5c20abb783800e071098c2a8",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ZH-CNTS",
+  "languageName": "Nepali"
+},
+{
+  "_id": "5c20abb783800e071098c2b0",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FLSH",
+  "languageName": "Odiya"
+},
+{
+  "_id": "5c20abb783800e071098c2b4",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "BHO",
+  "languageName": "Ossetian"
+},
+{
+  "_id": "5c20abb783800e071098c2b7",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "BAN",
+  "languageName": "Pashto"
+},
+{
+  "_id": "5c20abb783800e071098c2b8",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ZU",
+  "languageName": "Persian/Farsi"
+},
+{
+  "_id": "5c20abb783800e071098c2b9",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AR-IQ",
+  "languageName": "Pnar"
+},
+{
+  "_id": "5c20abb783800e071098c2ca",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Samoan"
+},
+{
+  "_id": "5c20abb783800e071098c2cc",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ZHS-PRC",
+  "languageName": "Sanskrit"
+},
+{
+  "_id": "5c20abb783800e071098c2d0",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NL",
+  "languageName": "Serbian"
+},
+{
+  "_id": "5c20abb783800e071098c2d6",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Sichuan Yi"
+},
+{
+  "_id": "5c20abb783800e071098c2dd",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR",
+  "languageName": "Somali"
+},
+{
+  "_id": "5c20abb783800e071098c2df",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR-LUX",
+  "languageName": "Southern Sotho"
+},
+{
+  "_id": "5c20abb783800e071098c2e0",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Spanish"
+},
+{
+  "_id": "5c20abb783800e071098c2fa",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "PA",
+  "languageName": "Swahili"
+},
+{
+  "_id": "5c20abb783800e071098c2fd",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SR-SP-Cyrl",
+  "languageName": "Tagalog"
+},
+{
+  "_id": "5c20abb783800e071098c2ff",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SR",
+  "languageName": "Taiwanese"
+},
+{
+  "_id": "5c20abb783800e071098c306",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-CR",
+  "languageName": "Tigrinya"
+},
+{
+  "_id": "5c20abb783800e071098c307",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-DO",
+  "languageName": "Tonga"
+},
+{
+  "_id": "5c20abb783800e071098c30d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-MX",
+  "languageName": "Turkish"
+},
+{
+  "_id": "5c20abb783800e071098c310",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Uighur"
+},
+{
+  "_id": "5c20abb783800e071098c311",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-PE",
+  "languageName": "Ukrainian"
+},
+{
+  "_id": "5c20abb783800e071098c31c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "UZ-XC",
+  "languageName": "Western Frisian"
+},
+{
+  "_id": "5ca307f66c0ab61d30af5869",
+  "__v": "0",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "EN-AU",
+  "languageName": "Zulu"
+},
+{
+  "_id": "5c20abb783800e071098c1f2",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "EN",
+  "languageName": "Azerbaijani"
+},
+{
+  "_id": "5c20abb783800e071098c1f5",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "GA",
+  "languageName": "Bahasa"
+},
+{
+  "_id": "5c20abb783800e071098c1fa",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "GARO",
+  "languageName": "Bangladeshi Bengali"
+},
+{
+  "_id": "5c20abb783800e071098c200",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HR",
+  "languageName": "Bihari"
+},
+{
+  "_id": "5c20abb783800e071098c201",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HT",
+  "languageName": "Bislama"
+},
+{
+  "_id": "5c20abb783800e071098c206",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "IO",
+  "languageName": "Bulgarian"
+},
+{
+  "_id": "5c20abb783800e071098c209",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KA",
+  "languageName": "Cebuano"
+},
+{
+  "_id": "5c20abb783800e071098c218",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MR",
+  "languageName": "Corsican"
+},
+{
+  "_id": "5c20abb783800e071098c21a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MZ",
+  "languageName": "Croatian"
+},
+{
+  "_id": "5c20abb783800e071098c21c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ND",
+  "languageName": "Danish"
+},
+{
+  "_id": "5c20abb783800e071098c220",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NY",
+  "languageName": "Dogri"
+},
+{
+  "_id": "5c20abb783800e071098c22b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SK",
+  "languageName": "Estonian"
+},
+{
+  "_id": "5c20abb783800e071098c22e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SQ",
+  "languageName": "Ewe"
+},
+{
+  "_id": "5c20abb783800e071098c230",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SU",
+  "languageName": "Fijian"
+},
+{
+  "_id": "5c20abb783800e071098c253",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AE",
+  "languageName": "Garo"
+},
+{
+  "_id": "5c20abb783800e071098c25d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "EO",
+  "languageName": "Haryanvi"
+},
+{
+  "_id": "5c20abb783800e071098c264",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FJ",
+  "languageName": "HK Cantonese"
+},
+{
+  "_id": "5c20abb783800e071098c269",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "IG",
+  "languageName": "Indonesian"
+},
+{
+  "_id": "5c20abb783800e071098c26f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KOK",
+  "languageName": "Inupiaq"
+},
+{
+  "_id": "5c20abb783800e071098c281",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MY",
+  "languageName": "Kiswahili"
+},
+{
+  "_id": "5c20abb783800e071098c283",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NE",
+  "languageName": "Kongo"
+},
+{
+  "_id": "5c20abb783800e071098c286",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NV",
+  "languageName": "Kurdish"
+},
+{
+  "_id": "5c20abb783800e071098c28d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "QU",
+  "languageName": "Lingala"
+},
+{
+  "_id": "5c20abb783800e071098c299",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SV",
+  "languageName": "Malayalam"
+},
+{
+  "_id": "5c20abb783800e071098c29c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TI",
+  "languageName": "Maltese"
+},
+{
+  "_id": "5c20abb783800e071098c2a4",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "WA",
+  "languageName": "Mongolian"
+},
+{
+  "_id": "5c20abb783800e071098c2a7",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ZH",
+  "languageName": "Ndonga"
+},
+{
+  "_id": "5c20abb783800e071098c2a9",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HIL",
+  "languageName": "North American"
+},
+{
+  "_id": "5c20abb783800e071098c2aa",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "EN-UK",
+  "languageName": "North Ndebele"
+},
+{
+  "_id": "5c20abb783800e071098c2af",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "PK_UR",
+  "languageName": "Occitan"
+},
+{
+  "_id": "5c20abb783800e071098c2bb",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AR-KW",
+  "languageName": "Portuguese"
+},
+{
+  "_id": "5c20abb783800e071098c2c3",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AR-AE",
+  "languageName": "Quechua"
+},
+{
+  "_id": "5c20abb783800e071098c2cd",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ZHS-SING",
+  "languageName": "Santhali"
+},
+{
+  "_id": "5c20abb783800e071098c2cf",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NL-BN",
+  "languageName": "Scottish Gaelic"
+},
+{
+  "_id": "5c20abb783800e071098c2d4",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR-CM",
+  "languageName": "Serbo-Croatian"
+},
+{
+  "_id": "5c20abb783800e071098c2d8",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR-CD",
+  "languageName": "Sinhala"
+},
+{
+  "_id": "5c20abb783800e071098c300",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SK",
+  "languageName": "Tajik"
+},
+{
+  "_id": "5c20abb783800e071098c302",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-BO",
+  "languageName": "Tatar"
+},
+{
+  "_id": "5c20abb783800e071098c303",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Telugu"
+},
+{
+  "_id": "5c20abb783800e071098c305",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-CO",
+  "languageName": "Tibetian"
+},
+{
+  "_id": "5c20abb783800e071098c319",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TO-ZM",
+  "languageName": "Volapuk"
+},
+{
+  "_id": "5c20abb783800e071098c31b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "UK-RU",
+  "languageName": "Welsh"
+},
+{
+  "_id": "5c20abb783800e071098c31d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "UZ-XL",
+  "languageName": "Wolof"
+},
+{
+  "_id": "5c20abb783800e071098c1d9",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AM",
+  "languageName": "Afrikaans"
+},
+{
+  "_id": "5c20abb783800e071098c1db",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AV",
+  "languageName": "Albanian"
+},
+{
+  "_id": "5c20abb783800e071098c1dc",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AZ",
+  "languageName": "Amharic"
+},
+{
+  "_id": "5c20abb783800e071098c1eb",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "CY",
+  "languageName": "Armenian"
+},
+{
+  "_id": "5c20abb783800e071098c1f9",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "GU",
+  "languageName": "Bambara"
+},
+{
+  "_id": "5c20abb783800e071098c1fb",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "GV",
+  "languageName": "Bashkir"
+},
+{
+  "_id": "5c20abb783800e071098c1fc",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HA",
+  "languageName": "Basque"
+},
+{
+  "_id": "5c20abb783800e071098c1ff",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HO",
+  "languageName": "Bhojpuri"
+},
+{
+  "_id": "5c20abb783800e071098c208",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "JA",
+  "languageName": "Catalan"
+},
+{
+  "_id": "5c20abb783800e071098c20c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KK",
+  "languageName": "Chhattisgarhi"
+},
+{
+  "_id": "5c20abb783800e071098c20d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KM",
+  "languageName": "Chichewa"
+},
+{
+  "_id": "5c20abb783800e071098c217",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ML",
+  "languageName": "Cornish"
+},
+{
+  "_id": "5c20abb783800e071098c21e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NN",
+  "languageName": "Davao"
+},
+{
+  "_id": "5c20abb783800e071098c224",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "PL",
+  "languageName": "Dzongkha"
+},
+{
+  "_id": "5c20abb783800e071098c22d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SO",
+  "languageName": "European Portuguese"
+},
+{
+  "_id": "5c20abb783800e071098c234",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TK",
+  "languageName": "French"
+},
+{
+  "_id": "5c20abb783800e071098c259",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "BA",
+  "languageName": "Greek"
+},
+{
+  "_id": "5c20abb783800e071098c261",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FA",
+  "languageName": "Hiligaynon"
+},
+{
+  "_id": "5c20abb783800e071098c262",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FF",
+  "languageName": "Hindi"
+},
+{
+  "_id": "5c20abb783800e071098c265",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FO",
+  "languageName": "Hungarian"
+},
+{
+  "_id": "5c20abb783800e071098c267",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HZ",
+  "languageName": "Ido"
+},
+{
+  "_id": "5c20abb783800e071098c268",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ID",
+  "languageName": "Igbo"
+},
+{
+  "_id": "5c20abb783800e071098c26c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "IU",
+  "languageName": "Interlingua"
+},
+{
+  "_id": "5c20abb783800e071098c26e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KG",
+  "languageName": "Inuktitut"
+},
+{
+  "_id": "5c20abb783800e071098c271",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KL",
+  "languageName": "Italian"
+},
+{
+  "_id": "5c20abb783800e071098c27a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "LV",
+  "languageName": "Kazakh"
+},
+{
+  "_id": "5c20abb783800e071098c27b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MH",
+  "languageName": "Khasi"
+},
+{
+  "_id": "5c20abb783800e071098c27c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MI",
+  "languageName": "Khmer"
+},
+{
+  "_id": "5c20abb783800e071098c27d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MK",
+  "languageName": "Kikuyu"
+},
+{
+  "_id": "5c20abb783800e071098c282",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NB",
+  "languageName": "Komi"
+},
+{
+  "_id": "5c20abb783800e071098c284",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NL",
+  "languageName": "Konkani"
+},
+{
+  "_id": "5c20abb783800e071098c28a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "PI",
+  "languageName": "Latin"
+},
+{
+  "_id": "5c20abb783800e071098c28f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "RO",
+  "languageName": "Luba-Katanga"
+},
+{
+  "_id": "5c20abb783800e071098c295",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SN",
+  "languageName": "Macedonian"
+},
+{
+  "_id": "5c20abb783800e071098c2ac",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "BGC",
+  "languageName": "Norwegian"
+},
+{
+  "_id": "5c20abb783800e071098c2ba",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AR-JO",
+  "languageName": "Polish"
+},
+{
+  "_id": "5c20abb783800e071098c2c0",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AR-SA",
+  "languageName": "Punjabi"
+},
+{
+  "_id": "5c20abb783800e071098c2c4",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AR-YE",
+  "languageName": "Raeto-Romance"
+},
+{
+  "_id": "5c20abb783800e071098c2c7",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AZ-XC",
+  "languageName": "Russian"
+},
+{
+  "_id": "5c20abb783800e071098c2ce",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ZHT-TW",
+  "languageName": "Sardinian"
+},
+{
+  "_id": "5c20abb783800e071098c2d5",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR CA",
+  "languageName": "Shona"
+},
+{
+  "_id": "5c20abb783800e071098c2dc",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Slovenian"
+},
+{
+  "_id": "5c20abb783800e071098c2de",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR-HAITI",
+  "languageName": "South Ndebele"
+},
+{
+  "_id": "5c20abb783800e071098c30b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-GT",
+  "languageName": "Tsonga"
+},
+{
+  "_id": "5c20abb783800e071098c313",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-ES",
+  "languageName": "Urdu"
+},
+{
+  "_id": "5c20abb783800e071098c314",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-UY",
+  "languageName": "Uzbek"
+},
+{
+  "_id": "5c57ed448aa324057833f59f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SSE",
+  "languageName": "Xhosa"
+},
+{
+  "_id": "5c20abb783800e071098c1ef",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "DZ",
+  "languageName": "Avaric"
+},
+{
+  "_id": "5c20abb783800e071098c1f7",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "GL",
+  "languageName": "Bahasa Indonesia"
+},
+{
+  "_id": "5c20abb783800e071098c1f8",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "GN",
+  "languageName": "Bahasa Malay"
+},
+{
+  "_id": "5c20abb783800e071098c1fd",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HE",
+  "languageName": "Belarusian"
+},
+{
+  "_id": "5c20abb783800e071098c1fe",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HI",
+  "languageName": "Bengali"
+},
+{
+  "_id": "5c20abb783800e071098c207",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "IT",
+  "languageName": "Burmese"
+},
+{
+  "_id": "5c20abb783800e071098c20e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KO",
+  "languageName": "Chinese"
+},
+{
+  "_id": "5c20abb783800e071098c215",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "LU",
+  "languageName": "Church Slavic"
+},
+{
+  "_id": "5c20abb783800e071098c219",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MS",
+  "languageName": "Cree"
+},
+{
+  "_id": "5c20abb783800e071098c21d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NG",
+  "languageName": "Dari"
+},
+{
+  "_id": "5c20abb783800e071098c21f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NR",
+  "languageName": "Divehi"
+},
+{
+  "_id": "5c20abb783800e071098c225",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "PT",
+  "languageName": "English"
+},
+{
+  "_id": "5c20abb783800e071098c22a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SG",
+  "languageName": "Esperanto"
+},
+{
+  "_id": "5c20abb783800e071098c22c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SM",
+  "languageName": "European French"
+},
+{
+  "_id": "5c20abb783800e071098c22f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SS",
+  "languageName": "Faroese"
+},
+{
+  "_id": "5c20abb783800e071098c232",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TE",
+  "languageName": "Finnish"
+},
+{
+  "_id": "5c20abb783800e071098c252",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AA",
+  "languageName": "Ganda"
+},
+{
+  "_id": "5c20abb783800e071098c254",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AF",
+  "languageName": "Georgian"
+},
+{
+  "_id": "5c20abb783800e071098c255",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "AK",
+  "languageName": "German"
+},
+{
+  "_id": "5c20abb783800e071098c25b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "BM",
+  "languageName": "Gujarati"
+},
+{
+  "_id": "5c20abb783800e071098c25c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "CH",
+  "languageName": "Haitian"
+},
+{
+  "_id": "5c20abb783800e071098c25f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ET",
+  "languageName": "Hebrew"
+},
+{
+  "_id": "5c20abb783800e071098c260",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "EU",
+  "languageName": "Herero"
+},
+{
+  "_id": "5c20abb783800e071098c26d",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "JV",
+  "languageName": "Interlingue"
+},
+{
+  "_id": "5c20abb783800e071098c270",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "KJ",
+  "languageName": "Irish"
+},
+{
+  "_id": "5c20abb783800e071098c278",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "LN",
+  "languageName": "Kanuri"
+},
+{
+  "_id": "5c20abb783800e071098c279",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "LT",
+  "languageName": "Kashmiri"
+},
+{
+  "_id": "5c20abb783800e071098c27f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MWR",
+  "languageName": "Kirghiz"
+},
+{
+  "_id": "5c20abb783800e071098c280",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "MT",
+  "languageName": "Kirundi"
+},
+{
+  "_id": "5c20abb783800e071098c285",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "NO",
+  "languageName": "Korean"
+},
+{
+  "_id": "5c20abb783800e071098c287",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "OC",
+  "languageName": "Kwanyama"
+},
+{
+  "_id": "5c20abb783800e071098c28b",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "PS",
+  "languageName": "Latvian"
+},
+{
+  "_id": "5c20abb783800e071098c28e",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "RM",
+  "languageName": "Lithuanian"
+},
+{
+  "_id": "5c20abb783800e071098c290",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "RW",
+  "languageName": "Luo"
+},
+{
+  "_id": "5c20abb783800e071098c296",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SL_TA",
+  "languageName": "Maithali"
+},
+{
+  "_id": "5c20abb783800e071098c298",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ST",
+  "languageName": "Malay"
+},
+{
+  "_id": "5c20abb783800e071098c29a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TA",
+  "languageName": "Malaysian Tamil"
+},
+{
+  "_id": "5c20abb783800e071098c29f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TS",
+  "languageName": "Maori"
+},
+{
+  "_id": "5c20abb783800e071098c2a2",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "UZ",
+  "languageName": "Marwari"
+},
+{
+  "_id": "5c20abb783800e071098c2a3",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "VI",
+  "languageName": "Mizo"
+},
+{
+  "_id": "5c20abb783800e071098c2a6",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "YO",
+  "languageName": "Navajo"
+},
+{
+  "_id": "5c20abb783800e071098c2ab",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HK_CNTS",
+  "languageName": "Northern Sami"
+},
+{
+  "_id": "5c20abb783800e071098c2b1",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SNTL",
+  "languageName": "Ojibwa"
+},
+{
+  "_id": "5c20abb783800e071098c2b2",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "DGR",
+  "languageName": "Oriya"
+},
+{
+  "_id": "5c20abb783800e071098c2b3",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "DAV",
+  "languageName": "Oromo"
+},
+{
+  "_id": "5c20abb783800e071098c2b5",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "OD",
+  "languageName": "Pakistani"
+},
+{
+  "_id": "5c20abb783800e071098c2b6",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ML_TA",
+  "languageName": "Pali"
+},
+{
+  "_id": "5c20abb783800e071098c2c5",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HY-EA",
+  "languageName": "Rajasthani"
+},
+{
+  "_id": "5c20abb783800e071098c2c6",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "HY-WE",
+  "languageName": "Romanian"
+},
+{
+  "_id": "5c20abb783800e071098c2cb",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ZHT-HK",
+  "languageName": "Sango"
+},
+{
+  "_id": "5c20abb783800e071098c2d7",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR-CO",
+  "languageName": "Sindhi"
+},
+{
+  "_id": "5c20abb783800e071098c2d9",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR-CR",
+  "languageName": "Sinhalese"
+},
+{
+  "_id": "5c20abb783800e071098c2da",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Slovak"
+},
+{
+  "_id": "5c20abb783800e071098c2db",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "FR",
+  "languageName": "Slovakia"
+},
+{
+  "_id": "5c20abb783800e071098c2f9",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Sundanese"
+},
+{
+  "_id": "5c20abb783800e071098c2fb",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "",
+  "languageName": "Swati"
+},
+{
+  "_id": "5c20abb783800e071098c2fc",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "RU",
+  "languageName": "Swedish"
+},
+{
+  "_id": "5c20abb783800e071098c2fe",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SR-SP-Latn",
+  "languageName": "Tahitian"
+},
+{
+  "_id": "5c20abb783800e071098c301",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-AR",
+  "languageName": "Tamil"
+},
+{
+  "_id": "5c20abb783800e071098c304",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-CLE",
+  "languageName": "Thai"
+},
+{
+  "_id": "5c20abb783800e071098c30c",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-HN",
+  "languageName": "Tswana"
+},
+{
+  "_id": "5c20abb783800e071098c30f",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "ES-PA",
+  "languageName": "Turkmen"
+},
+{
+  "_id": "5c20abb783800e071098c317",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TO-MW",
+  "languageName": "Venda"
+},
+{
+  "_id": "5c20abb783800e071098c318",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TO",
+  "languageName": "Vietnamese"
+},
+{
+  "_id": "5c20abb783800e071098c31a",
+  "__v": "",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "TR-DE",
+  "languageName": "Walloon"
+},
+{
+  "_id": "5ca20f7c83acda13105129bf",
+  "__v": "0",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SN",
+  "languageName": "Yiddish"
+},
+{
+  "_id": "5ca21004c399b921502e4d26",
+  "__v": "0",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "DA",
+  "languageName": "Yoruba"
+},
+{
+  "_id": "5ca2102bc399b921502e4d27",
+  "__v": "0",
+  "createdBy": "",
+  "createdName": "",
+  "createdOn": "",
+  "languageCode": "SC",
+  "languageName": "Zhuang"
+}]
