@@ -142,10 +142,12 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
     if (!Array.isArray(tasks)) {
       return res.status(400).json({ error: "Tasks should be an array" });
     }
+    
     const project = await Project.findById(projectId);
     if (!project) {
       return res.status(404).json({ error: "Project not found" });
     }
+    
     tasks.forEach((newTask) => {
       const existingTaskIndex = project.tasks.findIndex(
         (task) => task._id === newTask._id
@@ -156,7 +158,13 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
         project.tasks.push({ ...newTask, index: project.tasks.length });
       }
     });
-    project.updatedAt = new Date().toISOString().split("T")[0];
+    
+    project.status = "In Progress";
+
+    // Set updatedAt to current date and time in UTC
+    const currentUtcDate = new Date().toISOString();
+    project.updatedAt = currentUtcDate;
+
     const updatedProject = await project.save();
     res.status(200).json(updatedProject);
   } catch (error) {
@@ -164,6 +172,7 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
 
 router.delete("/projects/:id", async (req, res) => {
   try {

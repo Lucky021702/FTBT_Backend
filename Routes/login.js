@@ -45,33 +45,11 @@ router.post("/addUser", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-// router.post("/authenticate", async (req, res) => {
-//     try {
-//       const { email, password, department } = req.body;
-//       const user = await userSchema.findOne({ email, department });
-//       if (!user) {
-//         return res.status(400).json({ message: "User Not Found" });
-//       }
-//       if (password !== user.password) {
-//         return res.status(400).json({ message: "Invalid Password" });
-//       }
-//       const token = jwt.sign(
-//         { userId: user._id, department: user.department },
-//         process.env.JWT_SECRET
-//       );
-//       return res.status(200).json({ token,email: user.email });
-//     } catch (error) {
-//       console.log("Error authenticating user:", error);
-//       return res.status(500).json({ message: "Internal Server Error" });
-//     }
-//   });
-
-//hashed password
 
 router.post("/authenticate", async (req, res) => {
   try {
-    const { email, password, department } = req.body;
-    const user = await userSchema.findOne({ email, department });
+    const { email, password } = req.body;
+    const user = await userSchema.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "User Not Found" });
     }
@@ -79,15 +57,15 @@ router.post("/authenticate", async (req, res) => {
     if (!isPasswordValid) {
       return res.status(400).json({ message: "Invalid Password" });
     }
+    console.log(user);
     const token = jwt.sign(
-      { userId: user._id, department: user.department },
+      { userId: user._id, name: user.name , department: user.department },
       process.env.JWT_SECRET
     );
     return res.status(200).json({
       token,
       email: user.email,
       _id: user._id,
-      department: user.department,
     });
   } catch (error) {
     console.log("Error authenticating user:", error);
