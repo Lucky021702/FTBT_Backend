@@ -5,7 +5,14 @@ const User = require("../models/Schema.js");
 
 router.post("/createProject", async (req, res) => {
   try {
-    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage } = req.body;
+    const {
+      projectName,
+      email,
+      tmxUpload,
+      sourceUpload,
+      sourceLanguage,
+      targetLanguage,
+    } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -29,19 +36,19 @@ router.post("/createProject", async (req, res) => {
     }
     if (!projectName) {
       return res.status(400).json({
-        error: "Project name is required"
+        error: "Project name is required",
       });
     }
-    
+
     if (!sourceLanguage) {
       return res.status(400).json({
-        error: "Source language is required"
+        error: "Source language is required",
       });
     }
-    
+
     if (!targetLanguage || targetLanguage.length === 0) {
       return res.status(400).json({
-        error: "At least one target language is required"
+        error: "At least one target language is required",
       });
     }
     const user = await User.findOne({ email });
@@ -51,20 +58,20 @@ router.post("/createProject", async (req, res) => {
         details: `User with email ${email} not found`,
       });
     }
-    
+
     const newProject = new Project({
       projectName,
       userId: user._id,
       status: "init",
       sourceUpload: sourceUpload || [],
       tmxUpload: tmxUpload || [],
-      sourceUpload: sourceUpload || [], 
-      tmxUpload: tmxUpload || [], 
+      sourceUpload: sourceUpload || [],
+      tmxUpload: tmxUpload || [],
       sourceLanguage,
       targetLanguage,
       email,
     });
-    
+
     const savedProject = await newProject.save();
     res.status(200).json(savedProject);
   } catch (error) {
@@ -137,7 +144,6 @@ router.put("/projects/:id", async (req, res) => {
 router.put("/projects/:id/tasksUpdate", async (req, res) => {
   const projectId = req.params.id;
   const { tasks } = req.body;
-
   try {
     if (!Array.isArray(tasks)) {
       return res.status(400).json({ error: "Tasks should be an array" });
@@ -156,6 +162,7 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
         project.tasks.push({ ...newTask, index: project.tasks.length });
       }
     });
+    project.status = "In Progress";
     project.updatedAt = new Date().toISOString().split("T")[0];
     const updatedProject = await project.save();
     res.status(200).json(updatedProject);
@@ -170,11 +177,13 @@ router.post("/projects/:department", async (req, res) => {
   try {
     const users = await User.find({ department: department });
     if (!users) {
-      return res.status(404).json({ error: 'Users not found' });
+      return res.status(404).json({ error: "Users not found" });
     }
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: "Error finding users", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Error finding users", details: error.message });
   }
 });
 

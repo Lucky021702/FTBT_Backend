@@ -36,7 +36,7 @@ router.post("/addUser", async (req, res) => {
       password: hashedPassword,
       department,
       name,
-      userId
+      userId,
     });
     await newUser.save();
     res.status(201).json({ message: "User added successfuly" });
@@ -80,7 +80,7 @@ router.post("/authenticate", async (req, res) => {
       return res.status(400).json({ message: "Invalid Password" });
     }
     const token = jwt.sign(
-      { userId: user._id, department: user.department },
+      { userId: user._id, name: user.name, department: user.department },
       process.env.JWT_SECRET
     );
     return res.status(200).json({
@@ -103,16 +103,5 @@ router.get("/users", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-// router.post("/projects", async (req, res) => {
-//   try {
-//     const { name, userId } = req.body;
-//     const project = await Project.create({ name, userId });
-//     res.status(201).json(project);
-//   } catch (error) {
-//     console.error("Error creating project:", error);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// });
 
 module.exports = router;
