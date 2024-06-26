@@ -5,14 +5,7 @@ const User = require("../models/Schema.js");
 
 router.post("/createProject", async (req, res) => {
   try {
-    const {
-      projectName,
-      email,
-      tmxUpload,
-      sourceUpload,
-      sourceLanguage,
-      targetLanguage,
-    } = req.body;
+    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -36,19 +29,19 @@ router.post("/createProject", async (req, res) => {
     }
     if (!projectName) {
       return res.status(400).json({
-        error: "Project name is required",
+        error: "Project name is required"
       });
     }
-
+    
     if (!sourceLanguage) {
       return res.status(400).json({
-        error: "Source language is required",
+        error: "Source language is required"
       });
     }
-
+    
     if (!targetLanguage || targetLanguage.length === 0) {
       return res.status(400).json({
-        error: "At least one target language is required",
+        error: "At least one target language is required"
       });
     }
     const user = await User.findOne({ email });
@@ -58,20 +51,20 @@ router.post("/createProject", async (req, res) => {
         details: `User with email ${email} not found`,
       });
     }
-
+    
     const newProject = new Project({
       projectName,
       userId: user._id,
       status: "init",
       sourceUpload: sourceUpload || [],
       tmxUpload: tmxUpload || [],
-      sourceUpload: sourceUpload || [],
-      tmxUpload: tmxUpload || [],
+      sourceUpload: sourceUpload || [], 
+      tmxUpload: tmxUpload || [], 
       sourceLanguage,
       targetLanguage,
       email,
     });
-
+    
     const savedProject = await newProject.save();
     res.status(200).json(savedProject);
   } catch (error) {
@@ -163,7 +156,8 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
       }
     });
     project.status = "In Progress";
-    project.updatedAt = new Date().toISOString().split("T")[0];
+    const currentUtcDate = new Date().toISOString();
+    project.updatedAt = currentUtcDate;
     const updatedProject = await project.save();
     res.status(200).json(updatedProject);
   } catch (error) {
@@ -172,20 +166,6 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
   }
 });
 
-router.post("/projects/:department", async (req, res) => {
-  const department = req.params.department;
-  try {
-    const users = await User.find({ department: department });
-    if (!users) {
-      return res.status(404).json({ error: "Users not found" });
-    }
-    res.status(200).json(users);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Error finding users", details: error.message });
-  }
-});
 
 router.delete("/projects/:id", async (req, res) => {
   try {
@@ -198,6 +178,22 @@ router.delete("/projects/:id", async (req, res) => {
     res
       .status(500)
       .json({ error: "Error deleting project", details: error.message });
+  }
+});
+
+router.post("/projects/:department", async (req, res) => {
+  const department = req.params.department;
+
+  try {
+    const users = await User.find({ department: department });
+
+    if (!users) {
+      return res.status(404).json({ error: 'Users not found' });
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Error finding users", details: error.message });
   }
 });
 
