@@ -5,7 +5,7 @@ const User = require("../models/Schema.js");
 
 router.post("/createProject", async (req, res) => {
   try {
-    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage } = req.body;
+    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -32,13 +32,13 @@ router.post("/createProject", async (req, res) => {
         error: "Project name is required"
       });
     }
-    
+   
     if (!sourceLanguage) {
       return res.status(400).json({
         error: "Source language is required"
       });
     }
-    
+   
     if (!targetLanguage || targetLanguage.length === 0) {
       return res.status(400).json({
         error: "At least one target language is required"
@@ -51,20 +51,21 @@ router.post("/createProject", async (req, res) => {
         details: `User with email ${email} not found`,
       });
     }
-    
+   
     const newProject = new Project({
       projectName,
+      assignedBy,
       userId: user._id,
       status: "init",
       sourceUpload: sourceUpload || [],
       tmxUpload: tmxUpload || [],
-      sourceUpload: sourceUpload || [], 
-      tmxUpload: tmxUpload || [], 
+      sourceUpload: sourceUpload || [],
+      tmxUpload: tmxUpload || [],
       sourceLanguage,
       targetLanguage,
       email,
     });
-    
+   
     const savedProject = await newProject.save();
     res.status(200).json(savedProject);
   } catch (error) {

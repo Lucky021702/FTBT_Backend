@@ -13,7 +13,7 @@ router.post("/send", async (req, res) => {
       toReceiver,
       message,
       timestamp: new Date(),
-      seen:false
+      seen: false,
     });
     await newMessage.save();
     res.status(201).json({ message: message });
@@ -27,7 +27,7 @@ router.get("/:toSender/messages", async (req, res) => {
   try {
     const toSender = req.params.toSender;
     const messages = await ChatMessage.find({
-      "toSender": toSender,
+      toSender: toSender,
     }).sort("-timestamp");
     res.json(messages);
   } catch (error) {
@@ -36,37 +36,45 @@ router.get("/:toSender/messages", async (req, res) => {
   }
 });
 
-router.post("/send", async (req, res) => {
-  try {
-    const { toSender, message, toReceiver } = req.body;
-    if (!toSender || !message || !toReceiver) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
-    const newMessage = new ChatMessage({ toSender, toReceiver, message });
-    await newMessage.save();
-    io.emit("chat message", newMessage);
-    res.status(201).json({ message });
-  } catch (error) {
-    console.error("Error sending message:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+// router.post("/send", async (req, res) => {
+//   try {
+//     const { toSender, message, toReceiver } = req.body;
+//     if (!toSender || !message || !toReceiver) {
+//       return res.status(400).json({ error: "All fields are required" });
+//     }
+//     // Save message to database
+//     const newMessage = new ChatMessage({ toSender, toReceiver, message });
+//     await newMessage.save();
+//     // Emit the message to all connected clients
+//     io.emit("chat message", newMessage);
+//     res.status(201).json({ message });
+//   } catch (error) {
+//     console.error("Error sending message:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
-router.post("/send", async (req, res) => {
-  try {
-    const { toSender, message, toReceiver } = req.body;
-    if (!toSender || !message || !toReceiver) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
-    const newMessage = new ChatMessage({ toSender, toReceiver, message });
-    await newMessage.save();
-    io.emit("chat message", newMessage);
-    res.status(201).json({ message });
-  } catch (error) {
-    console.error("Error sending message:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+// Handle sending messages
+// router.post("/send", async (req, res) => {
+//   try {
+//     const { toSender, message, toReceiver } = req.body;
+//     if (!toSender || !message || !toReceiver) {
+//       return res.status(400).json({ error: "All fields are required" });
+//     }
+
+//     // Save message to database
+//     const newMessage = new ChatMessage({ toSender, toReceiver, message });
+//     await newMessage.save();
+
+//     // Emit the message to all connected clients
+//     io.emit("chat message", newMessage);
+
+//     res.status(201).json({ message });
+//   } catch (error) {
+//     console.error("Error sending message:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 router.get("/:toSender/:toReceiver/messages", async (req, res) => {
   try {
@@ -105,21 +113,20 @@ router.post("/mark-as-seen", async (req, res) => {
   }
 });
 
-router.post("/edit-message",async(req,res)=>{
-  try{
-    const {chatId,messageId, chatMessage} = req.body
-  const findChatMessage = await ChatMessage.findById(chatId)
-  if(!findChatMessage) return res.status(404).json({error: "Message not found"})
-    findChatMessage.message = messageId
-  await findChatMessage.save()
-  io.emit("message-edited",{messageId})
-  res.status(200).json({message:"Message edited Succesfully"})
-  }
-  catch (error) {
+router.post("/edit-message", async (req, res) => {
+  try {
+    const { chatId, messageId, ChatMessage } = req.body;
+    const findChatMessage = await ChatMessage.findById(chatId);
+    if (!findChatMessage)
+      return res.status(404).json({ error: "Message not found" });
+    findChatMessage.message = messageId;
+    await findChatMessage.save();
+    io.emit("message-edited", { messageId });
+    res.status(200).json({ message: "Message edited Succesfully" });
+  } catch (error) {
     console.error("Error editing message:", error);
     res.status(500).json({ error: "Internal Server Error" });
-}});
-
-
+  }
+});
 
 module.exports = router;

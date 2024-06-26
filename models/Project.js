@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+ 
 const taskSchema = new Schema({
   serviceType: {
     type: String,
@@ -17,11 +17,18 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
+  assignedStatus:{
+    type: String
+  }
 });
-
+ 
 const projectSchema = new Schema(
   {
     projectName: {
+      type: String,
+      required: true,
+    },
+    assignedBy: {
       type: String,
       required: true,
     },
@@ -59,7 +66,7 @@ const projectSchema = new Schema(
   },
   { timestamps: true }
 );
-
+ 
 const Project = mongoose.model("Project", projectSchema);
-
+ 
 module.exports = Project;
