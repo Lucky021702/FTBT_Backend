@@ -205,32 +205,63 @@ router.post("/projects/:department", async (req, res) => {
   }
 });
 
+// router.post('/updateAssignStatus', async (req, res) => {
+//   try {
+//     const assignToName = req.body.name;
+//     const { assignedBy } = req.body; // Assuming status is provided in the request body
+
+//     // Find projects where tasks have the specified assignTo name and status is "In Progress"
+//     const projects = await Project.find({ 
+//       status: "In Progress",
+//       "tasks.assignTo": assignToName
+//     });
+
+//     // Iterate through each project to update the assignedStatus
+//     for (let i = 0; i < projects.length; i++) {
+//       const project = projects[i];
+      
+//       // Filter tasks in the project that match the assignToName
+//       const updatedTasks = project.tasks.map(task => {
+//         if (task.assignTo === assignToName) {
+//           return { ...task.toObject(), assignedStatus: true }; // Update assignedStatus field
+//         } else {
+//           return task;
+//         }
+//       });
+
+//       // Update tasks array in the project with updatedTasks
+//       project.tasks = updatedTasks;
+
+//       // Save the updated project back to the database
+//       await project.save();
+//     }
+
+//     res.status(200).json({ message: "Tasks updated successfully" });
+//   } catch (error) {
+//     console.error("Error updating tasks:", error);
+//     res.status(500).send(error);
+//   }
+// });
 router.post('/updateAssignStatus', async (req, res) => {
   try {
-    const assignToName = req.body.name;
-    const { status } = req.body; // Assuming status is provided in the request body
+    const { name, assignedStatus } = req.body; // Assuming status is provided in the request body
 
     // Find projects where tasks have the specified assignTo name and status is "In Progress"
     const projects = await Project.find({ 
       status: "In Progress",
-      "tasks.assignTo": assignToName
+      "tasks.assignTo": name
     });
 
     // Iterate through each project to update the assignedStatus
     for (let i = 0; i < projects.length; i++) {
       const project = projects[i];
       
-      // Filter tasks in the project that match the assignToName
-      const updatedTasks = project.tasks.map(task => {
-        if (task.assignTo === assignToName) {
-          return { ...task.toObject(), assignedStatus: true }; // Update assignedStatus field
-        } else {
-          return task;
+      // Filter tasks in the project that match the assignToName and update assignedStatus
+      project.tasks.forEach(task => {
+        if (task.assignTo === name) {
+          task.assignedStatus = assignedStatus; // Update assignedStatus field
         }
       });
-
-      // Update tasks array in the project with updatedTasks
-      project.tasks = updatedTasks;
 
       // Save the updated project back to the database
       await project.save();
@@ -243,28 +274,6 @@ router.post('/updateAssignStatus', async (req, res) => {
   }
 });
 
-// router.post('/updateAssignStatus', async (req, res) => {
-//   try {
-//     const assignToName = req.body.name;
-    
-//     const projects = await Project.find({ 
-//       status: "In Progress",
-//       "tasks.assignTo": assignToName // Filter projects where tasks have the specified assignTo name
-//     }, {
-//       tasks: { // Projection to include only matching tasks
-//         $elemMatch: { assignTo: assignToName } // Only include the tasks that match assignToName
-//       }
-//     });
-
-//     // Extract only the tasks array from each project
-//     const filteredTasks = projects.map(project => project.tasks[0]); // Assuming one matching task per project
-
-//     res.json(filteredTasks);
-//   } catch (error) {
-//     console.error("Error fetching projects:", error);
-//     res.status(500).send(error);
-//   }
-// });
 
 
 module.exports = router;
