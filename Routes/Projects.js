@@ -5,7 +5,7 @@ const User = require("../models/Schema.js");
 
 router.post("/createProject", async (req, res) => {
   try {
-    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage } = req.body;
+    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -54,6 +54,7 @@ router.post("/createProject", async (req, res) => {
     
     const newProject = new Project({
       projectName,
+      assignedBy,
       userId: user._id,
       status: "init",
       sourceUpload: sourceUpload || [],
@@ -203,5 +204,67 @@ router.post("/projects/:department", async (req, res) => {
     res.status(500).json({ error: "Error finding users", details: error.message });
   }
 });
+
+router.post('/updateAssignStatus', async (req, res) => {
+  try {
+    const assignToName = req.body.name;
+    const { status } = req.body; // Assuming status is provided in the request body
+
+    // Find projects where tasks have the specified assignTo name and status is "In Progress"
+    const projects = await Project.find({ 
+      status: "In Progress",
+      "tasks.assignTo": assignToName
+    });
+
+    // Iterate through each project to update the assignedStatus
+    for (let i = 0; i < projects.length; i++) {
+      const project = projects[i];
+      
+      // Filter tasks in the project that match the assignToName
+      const updatedTasks = project.tasks.map(task => {
+        if (task.assignTo === assignToName) {
+          return { ...task.toObject(), assignedStatus: true }; // Update assignedStatus field
+        } else {
+          return task;
+        }
+      });
+
+      // Update tasks array in the project with updatedTasks
+      project.tasks = updatedTasks;
+
+      // Save the updated project back to the database
+      await project.save();
+    }
+
+    res.status(200).json({ message: "Tasks updated successfully" });
+  } catch (error) {
+    console.error("Error updating tasks:", error);
+    res.status(500).send(error);
+  }
+});
+
+// router.post('/updateAssignStatus', async (req, res) => {
+//   try {
+//     const assignToName = req.body.name;
+    
+//     const projects = await Project.find({ 
+//       status: "In Progress",
+//       "tasks.assignTo": assignToName // Filter projects where tasks have the specified assignTo name
+//     }, {
+//       tasks: { // Projection to include only matching tasks
+//         $elemMatch: { assignTo: assignToName } // Only include the tasks that match assignToName
+//       }
+//     });
+
+//     // Extract only the tasks array from each project
+//     const filteredTasks = projects.map(project => project.tasks[0]); // Assuming one matching task per project
+
+//     res.json(filteredTasks);
+//   } catch (error) {
+//     console.error("Error fetching projects:", error);
+//     res.status(500).send(error);
+//   }
+// });
+
 
 module.exports = router;
