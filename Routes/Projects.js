@@ -238,28 +238,28 @@ router.post("/projects/:department", async (req, res) => {
 router.post('/updateAssignStatus', async (req, res) => {
   try {
     const { name, assignedStatus } = req.body; // Assuming status is provided in the request body
-
+ 
     // Find projects where tasks have the specified assignTo name and status is "In Progress"
-    const projects = await Project.find({ 
+    const projects = await Project.find({
       status: "In Progress",
       "tasks.assignTo": name
     });
-
+ 
     // Iterate through each project to update the assignedStatus
     for (let i = 0; i < projects.length; i++) {
       const project = projects[i];
-      
+     
       // Filter tasks in the project that match the assignToName and update assignedStatus
-      project.tasks.forEach(task => {
+     project.tasks.forEach(task => {
         if (task.assignTo === name) {
           task.assignedStatus = assignedStatus; // Update assignedStatus field
         }
       });
-
+ 
       // Save the updated project back to the database
       await project.save();
     }
-
+ 
     res.status(200).json({ message: "Tasks updated successfully" });
   } catch (error) {
     console.error("Error updating tasks:", error);
@@ -268,5 +268,44 @@ router.post('/updateAssignStatus', async (req, res) => {
 });
 
 
+router.post('/Find', async (req, res) => {
+  try {
+    const { name, serviceType } = req.body;
+
+    const project = await Project.findOne({
+      status: "In Progress",
+      "tasks.assignTo": name,
+      "tasks.serviceType": serviceType
+    }, {
+      _id: 1,
+      projectName: 1,
+      assignedBy: 1,
+      userId: 1,
+      status: 1,
+      sourceUpload: 1,
+      tmxUpload: 1,
+      targetLanguage: 1,
+      sourceLanguage: 1,
+      tasks: {
+        $elemMatch: {
+          assignTo: name,
+          serviceType: serviceType
+        }
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      __v: 1
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "No matching project found" });
+    }
+
+    res.json(project);
+  } catch (error) {
+    console.error("Error finding project:", error);
+    res.status(500).json({ message: "Error finding project" });
+  }
+});
 
 module.exports = router;
