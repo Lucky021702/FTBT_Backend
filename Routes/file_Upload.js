@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Project = require('../models/Project'); // Adjust the path as necessary
-
+const path = require("path");
 // Set up storage engine for multer
 const storage = multer.diskStorage({
   destination: './uploads/', // Change the path accordingly
@@ -46,7 +46,7 @@ router.post('/projects/:projectId/upload-source', (req, res) => {
       }
 
       const fileNames = files.map(file => file.filename);
-
+      console.log(fileNames);
       // Assuming you want to replace the existing array or push new files
       project.sourceUpload = project.sourceUpload.concat(fileNames); // Append new filenames to the existing array
       await project.save();
@@ -97,6 +97,18 @@ console.log(files);
     }
   });
 });
-
+router.post('/download', (req, res) => {
+  let fileName = req.body.fileName
+ 
+  const filePath = path.join(__dirname, '../uploads', fileName);
+ 
+   console.log( "__dirname",filePath);
+   res.download(filePath, (err) => {
+     if (err) {
+       console.error('Error occurred during file download:', err);
+       res.status(500).send('Error occurred during file download.');
+     }
+   });
+ });
 
 module.exports = router;
