@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/Project.js");
 const User = require("../models/Schema.js");
+const Domain = require("../models/Domain.js")
 
 
 router.post("/createProject", async (req, res) => {
@@ -77,6 +78,23 @@ router.post("/createProject", async (req, res) => {
     });
   }
 });
+
+
+
+router.get("/projects/domain", async (req, res) => {
+  try {
+    console.log("Fetching domains...");
+    const domains = await Domain.find();
+    console.log("Domains fetched:", domains);
+    res.status(200).json({ domains });
+  } catch (error) {
+    console.error("Error fetching domains:", error);
+    res.status(500).json({ error: "Failed to fetch domains" });
+  }
+});
+
+module.exports = router;
+
 
 router.get("/projects", async (req, res) => {
   try {
