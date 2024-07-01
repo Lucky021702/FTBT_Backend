@@ -1,37 +1,34 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const Project = require('../models/Project'); // Adjust the path as necessary
-const path = require('path');
-
-
+const multer = require("multer");
+const Project = require("../models/Project"); // Adjust the path as necessary
+const path = require("path");
 
 // Set up storage engine for multer
 const storage = multer.diskStorage({
-  destination: './uploads/', // Change the path accordingly
+  destination: "./uploads/", // Change the path accordingly
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
-  }
+  },
 });
 
 // // Init upload
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 } // 1MB limit per file
-}).array('sourceUpload', 10);
-
+  limits: { fileSize: 1000000 }, // 1MB limit per file
+}).array("sourceUpload", 10);
 
 // Init upload for multiple files
 const uploadTmx = multer({
   storage: storage,
-  limits: { fileSize: 1000000 } // 1MB limit per file
-}).array('tmxUpload', 10); // Maximum 10 files at a time
+  limits: { fileSize: 1000000 }, // 1MB limit per file
+}).array("tmxUpload", 10); // Maximum 10 files at a time
 
 // Endpoint for uploading source file
-router.post('/projects/:projectId/upload-source', (req, res) => {
+router.post("/projects/:projectId/upload-source", (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
-      console.error('Upload error:', err);
+      console.error("Upload error:", err);
       return res.status(500).json({ message: err.message });
     }
 
@@ -40,78 +37,83 @@ router.post('/projects/:projectId/upload-source', (req, res) => {
       const files = req.files;
 
       if (!files || files.length === 0) {
-        return res.status(400).json({ message: 'No files uploaded.' });
+        return res.status(400).json({ message: "No files uploaded." });
       }
 
       const project = await Project.findById(projectId);
       if (!project) {
-        return res.status(404).json({ message: 'Project not found.' });
+        return res.status(404).json({ message: "Project not found." });
       }
 
-      const fileNames = files.map(file => file.filename);
-
+      const fileNames = files.map((file) => file.filename);
+      console.log(fileNames);
       // Assuming you want to replace the existing array or push new files
       project.sourceUpload = project.sourceUpload.concat(fileNames); // Append new filenames to the existing array
       await project.save();
 
       res.status(200).json({
-        message: 'Source files uploaded successfully',
-        files
+        message: "Source files uploaded successfully",
+        files,
       });
     } catch (error) {
-      res.status(500).json({ message: 'Error uploading source files', error: error.message });
+      res.status(500).json({
+        message: "Error uploading source files",
+        error: error.message,
+      });
     }
   });
 });
 
 // Endpoint for uploading TMX file
-router.post('/projects/:projectId/upload-tmx', (req, res) => {
+router.post("/projects/:projectId/upload-tmx", (req, res) => {
   uploadTmx(req, res, async (err) => {
     if (err) {
-      console.error('Upload error:', err);
+      console.error("Upload error:", err);
       return res.status(500).json({ message: err.message });
     }
 
     try {
       const { projectId } = req.params;
       const files = req.files;
-console.log(files);
+      console.log(files);
       if (!files || files.length === 0) {
-        return res.status(400).json({ message: 'No files uploaded.' });
+        return res.status(400).json({ message: "No files uploaded." });
       }
 
       const project = await Project.findById(projectId);
       if (!project) {
-        return res.status(404).json({ message: 'Project not found.' });
+        return res.status(404).json({ message: "Project not found." });
       }
 
-      const fileNames = files.map(file => file.filename);
+      const fileNames = files.map((file) => file.filename);
 
       // Assuming you want to replace the existing array or push new files
       project.tmxUpload = project.tmxUpload.concat(fileNames); // Append new filenames to the existing array
       await project.save();
 
       res.status(200).json({
-        message: 'TMX files uploaded successfully',
-        files: fileNames
+        message: "TMX files uploaded successfully",
+        files: fileNames,
       });
     } catch (error) {
-      res.status(500).json({ message: 'Error uploading TMX files', error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error uploading TMX files", error: error.message });
     }
   });
 });
+router.post("/download", (req, res) => {
+  let fileName = req.body.fileName;
 
-router.post('/download', (req, res) => {
- let fileName = req.body.fileName
+  const filePath = path.join(__dirname, "../uploads", fileName);
 
- const filePath = path.join(__dirname, '../uploads', fileName);
-
-  console.log( "__dirname",filePath);
+  console.log("__dirname", filePath);
   res.download(filePath, (err) => {
     if (err) {
-      console.error('Error occurred during file download:', err);
-      res.status(500).send('Error occurred during file download.');
+      console.error("Error occurred during file download:", err);
+      res.status(500).send("Error occurred during file download.");
     }
   });
 });
+
 module.exports = router;
