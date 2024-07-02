@@ -60,6 +60,10 @@ const projectSchema = new Schema(
       type: String,
       required: true,
     },
+    domain: {
+      type: String,
+      required: true,
+    },
     tasks: {
       type: [taskSchema],
     },

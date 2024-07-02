@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { Client } = require("@elastic/elasticsearch");
-const client = new Client({ node: "http://localhost:9200" });
+// const { Client } = require("@elastic/elasticsearch");
+// const client = new Client({ node: "http://localhost:9200" });
 const Project = require('../models/Project'); // Adjust the path as necessary
 const path = require("path");
 // Set up storage engine for multer

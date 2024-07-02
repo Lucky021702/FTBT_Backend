@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const domainSchema = new Schema({
+const DomainSchema = new mongoose.Schema({
   domainName: {
     type: String,
     required: true,
@@ -16,6 +15,6 @@ const domainSchema = new Schema({
   },
 });
 
-const Domain = mongoose.model('domain', domainSchema);
+const Domain = mongoose.model('domain', DomainSchema,"domain");
 
 module.exports = Domain;
