@@ -2,11 +2,19 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/Project.js");
 const User = require("../models/Schema.js");
-
+const Domain = require("../models/Domain.js");
 
 router.post("/createProject", async (req, res) => {
   try {
-    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy } = req.body;
+    const {
+      projectName,
+      email,
+      tmxUpload,
+      sourceUpload,
+      sourceLanguage,
+      targetLanguage,
+      assignedBy,
+    } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -30,19 +38,19 @@ router.post("/createProject", async (req, res) => {
     }
     if (!projectName) {
       return res.status(400).json({
-        error: "Project name is required"
+        error: "Project name is required",
       });
     }
-   
+
     if (!sourceLanguage) {
       return res.status(400).json({
-        error: "Source language is required"
+        error: "Source language is required",
       });
     }
-   
+
     if (!targetLanguage || targetLanguage.length === 0) {
       return res.status(400).json({
-        error: "At least one target language is required"
+        error: "At least one target language is required",
       });
     }
     const user = await User.findOne({ email });
@@ -52,7 +60,7 @@ router.post("/createProject", async (req, res) => {
         details: `User with email ${email} not found`,
       });
     }
-   
+
     const newProject = new Project({
       projectName,
       assignedBy,
@@ -66,7 +74,7 @@ router.post("/createProject", async (req, res) => {
       targetLanguage,
       email,
     });
-   
+
     const savedProject = await newProject.save();
     res.status(200).json(savedProject);
   } catch (error) {
@@ -77,6 +85,20 @@ router.post("/createProject", async (req, res) => {
     });
   }
 });
+
+router.get("/projects/domain", async (req, res) => {
+  try {
+    console.log("Fetching domains...");
+    const domains = await Domain.find();
+    console.log("Domains fetched:", domains);
+    res.status(200).json({ domains });
+  } catch (error) {
+    console.error("Error fetching domains:", error);
+    res.status(500).json({ error: "Failed to fetch domains" });
+  }
+});
+
+module.exports = router;
 
 router.get("/projects", async (req, res) => {
   try {
@@ -139,14 +161,17 @@ router.put("/projects/:id", async (req, res) => {
 router.put("/projects/:id/tasksUpdate", async (req, res) => {
   const projectId = req.params.id;
   const { tasks } = req.body;
+
   try {
     if (!Array.isArray(tasks)) {
       return res.status(400).json({ error: "Tasks should be an array" });
     }
+
     const project = await Project.findById(projectId);
     if (!project) {
       return res.status(404).json({ error: "Project not found" });
     }
+
     tasks.forEach((newTask) => {
       const existingTaskIndex = project.tasks.findIndex(
         (task) => task._id === newTask._id
@@ -157,9 +182,13 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
         project.tasks.push({ ...newTask, index: project.tasks.length });
       }
     });
+
     project.status = "In Progress";
+
+    // Set updatedAt to current date and time in UTC
     const currentUtcDate = new Date().toISOString();
     project.updatedAt = currentUtcDate;
+
     const updatedProject = await project.save();
     res.status(200).json(updatedProject);
   } catch (error) {
@@ -167,7 +196,6 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 router.delete("/projects/:id", async (req, res) => {
   try {
@@ -190,40 +218,42 @@ router.post("/projects/:department", async (req, res) => {
     const users = await User.find({ department: department });
 
     if (!users) {
-      return res.status(404).json({ error: 'Users not found' });
+      return res.status(404).json({ error: "Users not found" });
     }
 
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: "Error finding users", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Error finding users", details: error.message });
   }
 });
 
-router.post('/updateAssignStatus', async (req, res) => {
+router.post("/updateAssignStatus", async (req, res) => {
   try {
     const { name, assignedStatus } = req.body; // Assuming status is provided in the request body
- 
+
     // Find projects where tasks have the specified assignTo name and status is "In Progress"
     const projects = await Project.find({
       status: "In Progress",
-      "tasks.assignTo": name
+      "tasks.assignTo": name,
     });
- 
+
     // Iterate through each project to update the assignedStatus
     for (let i = 0; i < projects.length; i++) {
       const project = projects[i];
-     
+
       // Filter tasks in the project that match the assignToName and update assignedStatus
-     project.tasks.forEach(task => {
+      project.tasks.forEach((task) => {
         if (task.assignTo === name) {
           task.assignedStatus = assignedStatus; // Update assignedStatus field
         }
       });
- 
+
       // Save the updated project back to the database
       await project.save();
     }
- 
+
     res.status(200).json({ message: "Tasks updated successfully" });
   } catch (error) {
     console.error("Error updating tasks:", error);
@@ -231,35 +261,37 @@ router.post('/updateAssignStatus', async (req, res) => {
   }
 });
 
-
-router.post('/Find', async (req, res) => {
+router.post("/Find", async (req, res) => {
   try {
     const { name, serviceType } = req.body;
 
-    const project = await Project.findOne({
-      status: "In Progress",
-      "tasks.assignTo": name,
-      "tasks.serviceType": serviceType
-    }, {
-      _id: 1,
-      projectName: 1,
-      assignedBy: 1,
-      userId: 1,
-      status: 1,
-      sourceUpload: 1,
-      tmxUpload: 1,
-      targetLanguage: 1,
-      sourceLanguage: 1,
-      tasks: {
-        $elemMatch: {
-          assignTo: name,
-          serviceType: serviceType
-        }
+    const project = await Project.findOne(
+      {
+        status: "In Progress",
+        "tasks.assignTo": name,
+        "tasks.serviceType": serviceType,
       },
-      createdAt: 1,
-      updatedAt: 1,
-      __v: 1
-    });
+      {
+        _id: 1,
+        projectName: 1,
+        assignedBy: 1,
+        userId: 1,
+        status: 1,
+        sourceUpload: 1,
+        tmxUpload: 1,
+        targetLanguage: 1,
+        sourceLanguage: 1,
+        tasks: {
+          $elemMatch: {
+            assignTo: name,
+            serviceType: serviceType,
+          },
+        },
+        createdAt: 1,
+        updatedAt: 1,
+        __v: 1,
+      }
+    );
 
     if (!project) {
       return res.status(404).json({ message: "No matching project found" });
@@ -271,7 +303,5 @@ router.post('/Find', async (req, res) => {
     res.status(500).json({ message: "Error finding project" });
   }
 });
-
-
 
 module.exports = router;
