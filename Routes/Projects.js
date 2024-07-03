@@ -7,7 +7,7 @@ const { ObjectId } = require('mongodb');
 
 router.post("/createProject", async (req, res) => {
   try {
-    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy,domain } = req.body;
+    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy,domain,index } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -71,7 +71,8 @@ router.post("/createProject", async (req, res) => {
       sourceLanguage,
       targetLanguage,
       email,
-      domain
+      domain,
+      index
     });
     
     const savedProject = await newProject.save();

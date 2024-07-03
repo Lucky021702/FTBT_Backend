@@ -37,10 +37,10 @@ const projectSchema = new Schema(
       ref: "User",
       required: true,
     },
-    // email: {
-    //   type: String,
-    //   required: true,
-    // },
+    index: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["init", "In Progress", "Completed"],
