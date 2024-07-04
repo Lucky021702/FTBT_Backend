@@ -5,6 +5,7 @@ const { Client } = require("@elastic/elasticsearch");
 const client = new Client({ node: "http://localhost:9200" });
 const Project = require('../models/Project'); // Adjust the path as necessary
 const path = require("path");
+const TM = require("../models/Tm")
 // Set up storage engine for multer
 const storage = multer.diskStorage({
   destination: './uploads/', // Change the path accordingly
@@ -122,133 +123,152 @@ router.post('/download', (req, res) => {
 });
 
 
-//  router.post("/searchIndex", async (index, data) => {
+ router.post("/searchIndex", async (req, res) => {
+  try {
+    const index = req.body.index;
+    const data = req.body.query;
+      const datas = await client.search({
+        index,
+        body: {
+          query: {
+            match: {
+              source: data,
+            },
+          },
+        },
+      });
+      // console.log(datas);
+      const hits = datas.hits.hits;
+      const results = [];
+  
+      if (hits.length === 0) {
+        return { results: [] };
+      }
+  
+      hits.forEach((hit) => {
+        // console.log(hit)
+        // console.log(JSON.stringify(hit),"this is hit........................................")
+        const source = hit._source.source;
+        const target = hit._source.target;
+        const diff = getSentenceDiff(source, data);
+        const id = hit._id;
+        let matchPercentage;
+  
+        if (diff === 0) {
+          matchPercentage = "100%";
+        } else if (diff === 1) {
+          matchPercentage = "99-95%";
+        } else if (diff === 2) {
+          matchPercentage = "90-95%";
+        } else if (diff === 3) {
+          matchPercentage = "85-90%";
+        } else {
+          matchPercentage = "Less than 85%";
+        }
+  
+        if (diff === 0) {
+          results.unshift({
+            id,
+            source,
+            target,
+            matchPercentage,
+          });
+        } else {
+          results.push({
+            id,
+            source,
+            target,
+            matchPercentage,
+          });
+        }
+      });
+  
+      return { results };
+    } catch (err) {
+      console.error(err);
+      throw new Error("An error occurred during the search.");
+    }
+ })
+// router.post("/createIndex",async(req, res) =>{
 //   try {
-//     const datas = await client.search({
-//       index,
-//       body: {
-//         query: {
-//           match: {
-//             source: data,
-//           },
-//         },
-//       },
+//     const newTM = new TM({
+//       clientId: req.body.clientId,
+//       sourceLanguage: req.body.sourceLanguage,
+//       targetLanguage: req.body.targetLanguage,
+//       domain: req.body.domain,
+//       index:
+//         `${req.body.sourceLanguage}_${req.body.targetLanguage}_${req.body.clientId}_${req.body.domain}`.toLowerCase(),
+//       createdOn: new Date().toISOString().slice(0, 10),
 //     });
-//     // console.log(datas);
-//     const hits = datas.hits.hits;
-//     const results = [];
 
-//     if (hits.length === 0) {
-//       return { results: [] };
+//     const savedTM = await TM.create(newTM);
+
+//     const indexName = newTM.index;
+
+//     // Create the index in Elasticsearch
+//     await client.indices.create({
+//       index: indexName,
+//     });
+
+//     // Assume that the indexData is provided in the request body as an array of documents
+//     const indexData = req.body.indexData;
+
+//     const bulkBody = [];
+//     let batchSize = 0;
+
+//     for (const data of indexData) {
+//       const action = { index: { _index: newTM.index } };
+//       const document = {
+//         source: data.Source,
+//         target: data.Target,
+//         domain: newTM.domain,
+//         clientId: newTM.clientId,
+//         timestamp: new Date(),
+//       };
+//       bulkBody.push(action, document);
+//       batchSize++;
+//       if (batchSize >= 1000) {
+//         await client.bulk({ body: bulkBody });
+//         bulkBody.length = 0;
+//         batchSize = 0;
+//       }
 //     }
 
-//     hits.forEach((hit) => {
-//       // console.log(hit)
-//       // console.log(JSON.stringify(hit),"this is hit........................................")
-//       const source = hit._source.source;
-//       const target = hit._source.target;
-//       const diff = getSentenceDiff(source, data);
-//       const id = hit._id;
-//       let matchPercentage;
+//     if (bulkBody.length > 0) {
+//       await client.bulk({ body: bulkBody });
+//     }
 
-//       if (diff === 0) {
-//         matchPercentage = "100%";
-//       } else if (diff === 1) {
-//         matchPercentage = "99-95%";
-//       } else if (diff === 2) {
-//         matchPercentage = "90-95%";
-//       } else if (diff === 3) {
-//         matchPercentage = "85-90%";
-//       } else {
-//         matchPercentage = "Less than 85%";
-//       }
-
-//       if (diff === 0) {
-//         results.unshift({
-//           id,
-//           source,
-//           target,
-//           matchPercentage,
-//         });
-//       } else {
-//         results.push({
-//           id,
-//           source,
-//           target,
-//           matchPercentage,
-//         });
-//       }
-//     });
-
-//     return { results };
+//     return res.json({ resp: indexData });
 //   } catch (err) {
 //     console.error(err);
-//     throw new Error("An error occurred during the search.");
+//     if (err.code === 11000) {
+//       return res.status(400).json({
+//         error:
+//           "TM for this Language pair and Client Id already exists. Try creating for another language.",
+//       });
+//     } else {
+//       return res
+//         .status(500)
+//         .json({ error: "An error occurred during index creation." });
+//     }
 //   }
-//  })
-router.post("/searchIndex", async (req, res) => {
-  const { index, data } = req.body;
+// })
+  router.post('/createIndex', async (req, res) => {
+    const { indexName, settings, mappings } = req.body.index;
 
-  try {
-    // Flatten the array of arrays to a single string (assuming source should be treated as single string)
-    const searchData = data.map(item => item[0]).join(' ');
-
-    console.log('Search Data:', searchData);
-
-    const response = await client.search({
-      index,
-      body: {
-        query: {
-          match: {
-            source: searchData
-          }
-        }
-      }
-    });
-
-    const hits = response.body.hits.hits;
-    const results = [];
-
-    hits.forEach((hit) => {
-      const source = hit._source.source;
-      const target = hit._source.target;
-      // Add your logic for calculating matchPercentage here
-      const matchPercentage = "TODO";
-
-      results.push({
-        id: hit._id,
-        source,
-        target,
-        matchPercentage
-      });
-    });
-
-    console.log('Search Results:', results);
-
-    return res.json({ results });
-  } catch (err) {
-    console.error('Elasticsearch search error:', err);
-    return res.status(500).json({ error: "An error occurred during the search." });
-  }
-});
-
-
-router.post('/createIndex', async (req, res) => {
-  const { indexName, settings, mappings } = req.body.index;
-
-  try {
-      const response = await client.indices.create({
-          index: indexName,
-          body: {
-              settings,
-              mappings
-          }
-      });
-      console.log(`Index "${indexName}" created`, response);
-      res.status(200).json({ message: `Index "${indexName}" created`, response });
-  } catch (error) {
-      console.error(`Error creating index "${indexName}":`, error);
-      res.status(500).json({ error: `Error creating index "${indexName}"`, message: error.message });
-  }
-});
+    try {
+        const response = await client.indices.create({
+            index: indexName,
+            body: {
+                settings,
+                mappings
+            }
+        });
+        console.log(`Index "${indexName}" created`, response);
+        res.status(200).json({ message: `Index "${indexName}" created`, response });
+    } catch (error) {
+        console.error(`Error creating index "${indexName}":`, error);
+        res.status(500).json({ error: `Error creating index "${indexName}"`, message: error.message });
+    }
+  });
 module.exports = router;

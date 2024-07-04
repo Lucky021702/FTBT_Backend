@@ -159,7 +159,6 @@ router.put("/projects/:id", async (req, res) => {
       .json({ error: "Error updating project", details: error.message });
   }
 });
-
 router.put("/projects/:id/tasksUpdate", async (req, res) => {
   const projectId = req.params.id;
   const { tasks } = req.body;
@@ -179,18 +178,23 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
         (task) => task._id === newTask._id
       );
       if (existingTaskIndex !== -1) {
-        project.tasks[existingTaskIndex] = newTask;
+        // Update existing task
+        project.tasks[existingTaskIndex] = {
+          ...newTask,
+          date: parseDate(newTask.date) // Convert 'date' string to Date object
+        };
       } else {
-        project.tasks.push({ ...newTask, index: project.tasks.length });
+        // Add new task
+        project.tasks.push({
+          ...newTask,
+          date: parseDate(newTask.date) // Convert 'date' string to Date object
+        });
       }
     });
     
     project.status = "In Progress";
-
-    // Set updatedAt to current date and time in UTC
-    const currentUtcDate = new Date().toISOString();
-    project.updatedAt = currentUtcDate;
-
+    project.updatedAt = new Date().toISOString(); // Set updatedAt to current date and time in UTC
+    
     const updatedProject = await project.save();
     res.status(200).json(updatedProject);
   } catch (error) {
@@ -198,6 +202,67 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// Function to parse date string into a Date object
+function parseDate(dateString) {
+  // Example: "2024-07-01 00:25:00 AM"
+  const parts = dateString.split(' ');
+  const datePart = parts[0]; // "2024-07-01"
+  const timePart = parts[1]; // "00:25:00"
+  const ampmPart = parts[2]; // "AM"
+
+  // Extract hours, minutes, seconds
+  const [hours, minutes, seconds] = timePart.split(':').map(part => parseInt(part, 10));
+
+  // Adjust hours if PM
+  let adjustedHours = hours;
+  if (ampmPart === 'PM' && hours < 12) {
+    adjustedHours += 12;
+  }
+
+  // Create Date object in UTC format
+  const dateObject = new Date(`${datePart}T${adjustedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}Z`);
+
+  return dateObject;
+}
+// router.put("/projects/:id/tasksUpdate", async (req, res) => {
+//   const projectId = req.params.id;
+//   const { tasks } = req.body;
+
+//   try {
+//     if (!Array.isArray(tasks)) {
+//       return res.status(400).json({ error: "Tasks should be an array" });
+//     }
+    
+//     const project = await Project.findById(projectId);
+//     if (!project) {
+//       return res.status(404).json({ error: "Project not found" });
+//     }
+    
+//     tasks.forEach((newTask) => {
+//       const existingTaskIndex = project.tasks.findIndex(
+//         (task) => task._id === newTask._id
+//       );
+//       if (existingTaskIndex !== -1) {
+//         project.tasks[existingTaskIndex] = newTask;
+//       } else {
+//         project.tasks.push({ ...newTask, index: project.tasks.length });
+//       }
+//     });
+    
+//     project.status = "In Progress";
+
+//     // Set updatedAt to current date and time in UTC
+//     const currentUtcDate = new Date().toISOString();
+//     project.updatedAt = currentUtcDate;
+
+//     const updatedProject = await project.save();
+//     res.status(200).json(updatedProject);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
 
 
 router.delete("/projects/:id", async (req, res) => {
@@ -293,6 +358,41 @@ router.post('/updateAssignStatus', async (req, res) => {
   }
 });
 
+// router.post('/Find', async (req, res) => {
+//   try {
+//     const { name, serviceType } = req.body;
+
+//     const projects = await Project.aggregate([
+//       { $match: { status: "In Progress", "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+//       { $unwind: "$tasks" },
+//       { $match: { "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+//       { $group: {
+//         _id: "$_id",
+//         projectName: { $first: "$projectName" },
+//         assignedBy: { $first: "$assignedBy" },
+//         userId: { $first: "$userId" },
+//         status: { $first: "$status" },
+//         sourceUpload: { $first: "$sourceUpload" },
+//         tmxUpload: { $first: "$tmxUpload" },
+//         targetLanguage: { $first: "$targetLanguage" },
+//         sourceLanguage: { $first: "$sourceLanguage" },
+//         tasks: { $push: "$tasks" },
+//         createdAt: { $first: "$createdAt" },
+//         updatedAt: { $first: "$updatedAt" },
+//         __v: { $first: "$__v" }
+//       }}
+//     ]);
+
+//     if (projects.length === 0) {
+//       return res.status(404).json({ message: "No matching project found" });
+//     }
+
+//     res.json(projects[0]); // Assuming you only expect one project to match
+//   } catch (error) {
+//     console.error("Error finding project:", error);
+//     res.status(500).json({ message: "Error finding project" });
+//   }
+// });
 router.post('/Find', async (req, res) => {
   try {
     const { name, serviceType } = req.body;
@@ -322,10 +422,10 @@ router.post('/Find', async (req, res) => {
       return res.status(404).json({ message: "No matching project found" });
     }
 
-    res.json(projects[0]); // Assuming you only expect one project to match
+    res.json(projects); // Return all matched projects
   } catch (error) {
-    console.error("Error finding project:", error);
-    res.status(500).json({ message: "Error finding project" });
+    console.error("Error finding projects:", error);
+    res.status(500).json({ message: "Error finding projects" });
   }
 });
 
