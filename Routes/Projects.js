@@ -2,19 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/Project.js");
 const User = require("../models/Schema.js");
-const Domain = require("../models/Domain.js");
+const Domain = require("../models/Domain.js")
+const { ObjectId } = require('mongodb'); 
 
 router.post("/createProject", async (req, res) => {
   try {
-    const {
-      projectName,
-      email,
-      tmxUpload,
-      sourceUpload,
-      sourceLanguage,
-      targetLanguage,
-      assignedBy,
-    } = req.body;
+    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy,domain,index } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -47,7 +40,12 @@ router.post("/createProject", async (req, res) => {
         error: "Source language is required",
       });
     }
-
+    if (!domain) {
+      return res.status(400).json({
+        error: "domain is required"
+      });
+    }
+    
     if (!targetLanguage || targetLanguage.length === 0) {
       return res.status(400).json({
         error: "At least one target language is required",
@@ -73,6 +71,8 @@ router.post("/createProject", async (req, res) => {
       sourceLanguage,
       targetLanguage,
       email,
+      domain,
+      index
     });
 
     const savedProject = await newProject.save();
@@ -88,7 +88,6 @@ router.post("/createProject", async (req, res) => {
 
 router.get("/projects/domain", async (req, res) => {
   try {
-    console.log("Fetching domains...");
     const domains = await Domain.find();
     console.log("Domains fetched:", domains);
     res.status(200).json({ domains });
@@ -161,17 +160,14 @@ router.put("/projects/:id", async (req, res) => {
 router.put("/projects/:id/tasksUpdate", async (req, res) => {
   const projectId = req.params.id;
   const { tasks } = req.body;
-
   try {
     if (!Array.isArray(tasks)) {
       return res.status(400).json({ error: "Tasks should be an array" });
     }
-
     const project = await Project.findById(projectId);
     if (!project) {
       return res.status(404).json({ error: "Project not found" });
     }
-
     tasks.forEach((newTask) => {
       const existingTaskIndex = project.tasks.findIndex(
         (task) => task._id === newTask._id
@@ -186,7 +182,7 @@ router.put("/projects/:id/tasksUpdate", async (req, res) => {
     project.status = "In Progress";
 
     // Set updatedAt to current date and time in UTC
-    const currentUtcDate = new Date().toISOString();
+    const currentUtcDate = new Date()
     project.updatedAt = currentUtcDate;
 
     const updatedProject = await project.save();
@@ -229,75 +225,93 @@ router.post("/projects/:department", async (req, res) => {
   }
 });
 
-router.post("/updateAssignStatus", async (req, res) => {
+// router.post('/updateAssignStatus', async (req, res) => {
+//   try {
+//     const { name, assignedStatus } = req.body; // Assuming status is provided in the request body
+ 
+//     // Find projects where tasks have the specified assignTo name and status is "In Progress"
+//     const projects = await Project.find({
+//       status: "In Progress",
+//       "tasks.assignTo": name
+//     });
+ 
+//     // Iterate through each project to update the assignedStatus
+//     for (let i = 0; i < projects.length; i++) {
+//       const project = projects[i];
+//       console.log("project",project);
+     
+//       // Filter tasks in the project that match the assignToName and update assignedStatus
+//      project.tasks.forEach(task => {
+//         if (task.assignTo === name) {
+//           task.assignedStatus = assignedStatus; // Update assignedStatus field
+//         }
+//       });
+ 
+//       // Save the updated project back to the database
+//       await project.save();
+//     }
+ 
+//     res.status(200).json({ message: "Tasks updated successfully" });
+//   } catch (error) {
+//     console.error("Error updating tasks:", error);
+//     res.status(500).send(error);
+//   }
+// });
+router.post('/updateAssignStatus', async (req, res) => {
   try {
-    const { name, assignedStatus } = req.body; // Assuming status is provided in the request body
-
-    // Find projects where tasks have the specified assignTo name and status is "In Progress"
-    const projects = await Project.find({
+    const { taskId, assignedStatus } = req.body;
+    const project = await Project.findOne({
       status: "In Progress",
-      "tasks.assignTo": name,
+      "tasks._id": new ObjectId(taskId)
     });
-
-    // Iterate through each project to update the assignedStatus
-    for (let i = 0; i < projects.length; i++) {
-      const project = projects[i];
-
-      // Filter tasks in the project that match the assignToName and update assignedStatus
-      project.tasks.forEach((task) => {
-        if (task.assignTo === name) {
-          task.assignedStatus = assignedStatus; // Update assignedStatus field
-        }
-      });
-
-      // Save the updated project back to the database
-      await project.save();
+    if (project) {
+      const task = project.tasks.id(taskId);
+      if (task) {
+        task.assignedStatus = assignedStatus;
+        await project.save();
+        res.status(200).json({ message: "Task updated successfully" });
+      } else {
+        res.status(404).json({ message: "Task not found" });
+      }
+    } else {
+      res.status(404).json({ message: "Project not found" });
     }
-
-    res.status(200).json({ message: "Tasks updated successfully" });
   } catch (error) {
-    console.error("Error updating tasks:", error);
+    console.error("Error updating task:", error);
     res.status(500).send(error);
   }
 });
 
-router.post("/Find", async (req, res) => {
+router.post('/Find', async (req, res) => {
   try {
     const { name, serviceType } = req.body;
 
-    const project = await Project.findOne(
-      {
-        status: "In Progress",
-        "tasks.assignTo": name,
-        "tasks.serviceType": serviceType,
-      },
-      {
-        _id: 1,
-        projectName: 1,
-        assignedBy: 1,
-        userId: 1,
-        status: 1,
-        sourceUpload: 1,
-        tmxUpload: 1,
-        targetLanguage: 1,
-        sourceLanguage: 1,
-        tasks: {
-          $elemMatch: {
-            assignTo: name,
-            serviceType: serviceType,
-          },
-        },
-        createdAt: 1,
-        updatedAt: 1,
-        __v: 1,
-      }
-    );
+    const projects = await Project.aggregate([
+      { $match: { status: "In Progress", "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+      { $unwind: "$tasks" },
+      { $match: { "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+      { $group: {
+        _id: "$_id",
+        projectName: { $first: "$projectName" },
+        assignedBy: { $first: "$assignedBy" },
+        userId: { $first: "$userId" },
+        status: { $first: "$status" },
+        sourceUpload: { $first: "$sourceUpload" },
+        tmxUpload: { $first: "$tmxUpload" },
+        targetLanguage: { $first: "$targetLanguage" },
+        sourceLanguage: { $first: "$sourceLanguage" },
+        tasks: { $push: "$tasks" },
+        createdAt: { $first: "$createdAt" },
+        updatedAt: { $first: "$updatedAt" },
+        __v: { $first: "$__v" }
+      }}
+    ]);
 
-    if (!project) {
+    if (projects.length === 0) {
       return res.status(404).json({ message: "No matching project found" });
     }
 
-    res.json(project);
+    res.json(projects[0]); // Assuming you only expect one project to match
   } catch (error) {
     console.error("Error finding project:", error);
     res.status(500).json({ message: "Error finding project" });

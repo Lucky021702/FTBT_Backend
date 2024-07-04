@@ -8,6 +8,7 @@ const taskSchema = new Schema({
   },
   assignTo: {
     type: String,
+    required: true,
   },
   date: {
     type: Date,
@@ -17,9 +18,9 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
-  assignedStatus:{
-    type: String
-  }
+  assignedStatus: {
+    type: String,
+  },
 });
 
 const projectSchema = new Schema(
@@ -37,10 +38,10 @@ const projectSchema = new Schema(
       ref: "User",
       required: true,
     },
-    // email: {
-    //   type: String,
-    //   required: true,
-    // },
+    index: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["init", "In Progress", "Completed"],
@@ -57,6 +58,10 @@ const projectSchema = new Schema(
       required: true,
     },
     sourceLanguage: {
+      type: String,
+      required: true,
+    },
+    domain: {
       type: String,
       required: true,
     },

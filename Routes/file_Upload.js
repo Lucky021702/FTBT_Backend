@@ -127,101 +127,138 @@ router.get("/files/:fileName", (req, res) => {
   res.sendFile(filePath);
 });
 
-const NewMergeRows = async function (req, res) {
+// const NewMergeRows = async function (req, res) {
+//   try {
+//     const pid = new ObjectId(req.body._id);
+
+//  router.post("/searchIndex", async (index, data) => {
+//   try {
+//     const datas = await client.search({
+//       index,
+//       body: {
+//         query: {
+//           match: {
+//             source: data,
+//           },
+//         },
+//       },
+//     });
+//     // console.log(datas);
+//     const hits = datas.hits.hits;
+//     const results = [];
+
+//     if (hits.length === 0) {
+//       return { results: [] };
+//     }
+
+//     hits.forEach((hit) => {
+//       // console.log(hit)
+//       // console.log(JSON.stringify(hit),"this is hit........................................")
+//       const source = hit._source.source;
+//       const target = hit._source.target;
+//       const diff = getSentenceDiff(source, data);
+//       const id = hit._id;
+//       let matchPercentage;
+
+//       if (diff === 0) {
+//         matchPercentage = "100%";
+//       } else if (diff === 1) {
+//         matchPercentage = "99-95%";
+//       } else if (diff === 2) {
+//         matchPercentage = "90-95%";
+//       } else if (diff === 3) {
+//         matchPercentage = "85-90%";
+//       } else {
+//         matchPercentage = "Less than 85%";
+//       }
+
+//       if (diff === 0) {
+//         results.unshift({
+//           id,
+//           source,
+//           target,
+//           matchPercentage,
+//         });
+//       } else {
+//         results.push({
+//           id,
+//           source,
+//           target,
+//           matchPercentage,
+//         });
+//       }
+//     });
+
+//     return { results };
+//   } catch (err) {
+//     console.error(err);
+//     throw new Error("An error occurred during the search.");
+//   }
+//  })
+
+router.post("/searchIndex", async (req, res) => {
+  const { index, data } = req.body;
+
   try {
-    const pid = new ObjectId(req.body._id);
+    // Flatten the array of arrays to a single string (assuming source should be treated as single string)
+    const searchData = data.map(item => item[0]).join(' ');
 
-    if (req.body.splitRows && req.body.splitRows.length > 0) {
-      let jsonArrayCSV = req.body.splitRows;
-      let csvArrayMerge = [];
+    console.log('Search Data:', searchData);
 
-      var dirName = req.body.serviceType + req.body.fileName;
-      if (req.body.serviceType === "Translation") {
-        req.body.translatedFile = dirName;
-      } else {
-        req.body.completedFile = dirName;
-      }
-
-      const groupedArray = jsonArrayCSV.reduce((acc, val) => {
-        let estKey = val['index'];
-        (acc[estKey] ? acc[estKey] : (acc[estKey] = null || [])).push(val);
-        return acc;
-      }, []);
-
-      const tempArr = Object.values(groupedArray);
-
-      if (tempArr.length > 0) {
-        for (let extractIndex = 0; extractIndex < tempArr.length; extractIndex++) {
-          let mergedString = "";
-          let fieldValue = "";
-          let targetFieldValues = [];
-
-          for (let subIndex = 0; subIndex < tempArr[extractIndex].length; subIndex++) {
-            mergedString += tempArr[extractIndex][subIndex]["Original Field Value"] + tempArr[extractIndex][subIndex]["symbol"];
-            fieldValue = tempArr[extractIndex][subIndex]["Field Path"];
-            targetFieldValues.push(tempArr[extractIndex][subIndex]["Target Field Value"]);
+    const response = await client.search({
+      index,
+      body: {
+        query: {
+          match: {
+            source: searchData
           }
-
-          const targetFieldValue = targetFieldValues.join(""); // Join all Target Field Values
-
-          csvArrayMerge.push({
-            "Field Path": fieldValue,
-            "Original Field Value": mergedString,
-            "Target Field Value": targetFieldValue,
-          });
         }
       }
+    });
 
-      const fields = ["Field Path", "Original Field Value", "Target Field Value"];
-      const csv = parse(csvArrayMerge, { fields });
-      const csvData = iconv.encode(csv, "iso-8859-1");
+    const hits = response.body.hits.hits;
+    const results = [];
 
-      let data = await fs.writeFile(path.join(__dirname, "../../Uploads", dirName), csvData, async function (err) {
-        if (err) {
-          console.log(err);
-          throw new Error(err);
-        } else {
-          const fileSaved = req.body.serviceType === "Translation" ? "folderFiles.$.translatedFile" : "folderFiles.$.completedFile";
-          try {
-            const update = await CProject.updateOne(
-              {
-                _id: req.body._id,
-                "folderFiles.fileId": req.body.fileId,
-              },
-              {
-                $set: {
-                  [fileSaved]: dirName,
-                  "folderFiles.$.fileStatus": req.body.fileStatus,
-                }
-              });
-            if (update) {
-              res.status(200).sendfile(path.join(__dirname, "../../Uploads", dirName));
-            }
-          } catch (error) {
-            console.log(error);
-            let errorResponse = response.generateResponse(
-              error,
-              "An error occurred",
-              500,
-              null
-            );
-            res.status(500).send(errorResponse);
-          }
-        };
+    hits.forEach((hit) => {
+      const source = hit._source.source;
+      const target = hit._source.target;
+      // Add your logic for calculating matchPercentage here
+      const matchPercentage = "TODO";
+
+      results.push({
+        id: hit._id,
+        source,
+        target,
+        matchPercentage
       });
-    } else {
-      res.status(400).send("No data provided in splitRows");
-    }
-  } catch (error) {
-    console.log(error);
-    let errorResponse = response.generateResponse(
-      error,
-      "An error occurred",
-      500,
-      null
-    );
-    res.status(500).send(errorResponse);
-  }
-}
+    });
 
+    console.log('Search Results:', results);
+
+    return res.json({ results });
+  } catch (err) {
+    console.error('Elasticsearch search error:', err);
+    return res.status(500).json({ error: "An error occurred during the search." });
+  }
+});
+
+
+router.post('/createIndex', async (req, res) => {
+  const { indexName, settings, mappings } = req.body.index;
+
+  try {
+      const response = await client.indices.create({
+          index: indexName,
+          body: {
+              settings,
+              mappings
+          }
+      });
+      console.log(`Index "${indexName}" created`, response);
+      res.status(200).json({ message: `Index "${indexName}" created`, response });
+  } catch (error) {
+      console.error(`Error creating index "${indexName}":`, error);
+      res.status(500).json({ error: `Error creating index "${indexName}"`, message: error.message });
+  }
+});
 module.exports = router;
