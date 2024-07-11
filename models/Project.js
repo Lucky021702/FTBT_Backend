@@ -14,6 +14,10 @@ const taskSchema = new Schema({
     type: Date,
     required: true,
   },
+  assignSourceFilename: {
+    type: String,
+    required: true,
+  },
   assignTargetLanguage: {
     type: String,
     required: true,

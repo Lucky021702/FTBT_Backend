@@ -5,6 +5,7 @@ const { Client } = require("@elastic/elasticsearch");
 const client = new Client({ node: "http://localhost:9200" });
 const Project = require("../models/Project"); // Adjust the path as necessary
 const path = require("path");
+
 // Set up storage engine for multer
 const storage = multer.diskStorage({
   destination: "./uploads/", // Change the path accordingly
@@ -57,12 +58,10 @@ router.post("/projects/:projectId/upload-source", (req, res) => {
         files,
       });
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: "Error uploading source files",
-          error: error.message,
-        });
+      res.status(500).json({
+        message: "Error uploading source files",
+        error: error.message,
+      });
     }
   });
 });
@@ -127,12 +126,98 @@ router.get("/files/:fileName", (req, res) => {
   res.sendFile(filePath);
 });
 
-// const NewMergeRows = async function (req, res) {
+// router.post("/add", async (req, res) => {
+//   const { index, document } = req.body;
+//   if (!index || !document) {
+//     return res.status(400).json({ error: "Index and document are required" });
+//   }
 //   try {
-//     const pid = new ObjectId(req.body._id);
+//     const response = await client.index({
+//       index: index,
+//       body: document,
+//     });
+//     console.log(`Document added to index "${index}"`, response);
+//     res
+//       .status(200)
+//       .json({ message: `Document added to index "${index}"`, response });
+//   } catch (error) {
+//     console.error(`Error adding document to index "${index}":`, error);
+//     res.status(500).json({
+//       error: `Error adding document to index "${index}"`,
+//       message: error.message,
+//     });
+//   }
+// });
 
-//  router.post("/searchIndex", async (index, data) => {
+router.post("/add", async (req, res) => {
+  const { index, document } = req.body;
+  if (!index || !document || !Array.isArray(document)) {
+    return res
+      .status(400)
+      .json({ error: "Index and an array of documents are required" });
+  }
+  try {
+    const bulkBody = [];
+    document.forEach((doc) => {
+      bulkBody.push({ index: { _index: index } });
+      bulkBody.push(doc);
+    });
+    const response = await client.bulk({ body: bulkBody });
+    if (response.errors) {
+      // Log errors for further investigation
+      const erroredDocuments = [];
+      response.items.forEach((item, i) => {
+        if (item.index && item.index.error) {
+          erroredDocuments.push({
+            status: item.index.status,
+            error: item.index.error,
+            operation: bulkBody[i * 2],
+            document: bulkBody[i * 2 + 1],
+          });
+        }
+      });
+      console.error("Bulk operation had errors", erroredDocuments);
+      return res.status(500).json({
+        message: "Error indexing documents",
+        errors: erroredDocuments,
+      });
+    }
+    console.log(`Documents added to index "${index}"`, response);
+    res
+      .status(200)
+      .json({ message: `Documents added to index "${index}"`, response });
+  } catch (error) {
+    console.error(`Error adding documents to index "${index}":`, error);
+    res.status(500).json({
+      error: `Error adding documents to index "${index}"`,
+      message: error.message,
+    });
+  }
+});
+
+function getSentenceDiff(sent1, sent2) {
+  console.log(sent1);
+  let sentArr1 = sent1.split(" ");
+  let sentArr2 = sent2.split(" ");
+  let referenceSentence =
+    sentArr1.length > sentArr2.length ? sentArr1 : sentArr2;
+  let diffCount = 0;
+
+  for (let i = 0; i < referenceSentence.length; i++) {
+    if (sentArr1[i] !== undefined && sentArr2[i] !== undefined) {
+      if (sentArr1[i] !== sentArr2[i]) {
+        diffCount++;
+      }
+    } else {
+      diffCount++;
+    }
+  }
+  return diffCount;
+}
+// router.post("/searchIndex", async (req, res) => {
 //   try {
+//     const index = req.body.index;
+//     const data = req.body.query;
 //     const datas = await client.search({
 //       index,
 //       body: {
@@ -143,14 +228,12 @@ router.get("/files/:fileName", (req, res) => {
 //         },
 //       },
 //     });
-//     // console.log(datas);
+//     console.log(datas);
 //     const hits = datas.hits.hits;
 //     const results = [];
-
 //     if (hits.length === 0) {
 //       return { results: [] };
 //     }
-
 //     hits.forEach((hit) => {
 //       // console.log(hit)
 //       // console.log(JSON.stringify(hit),"this is hit........................................")
@@ -159,7 +242,6 @@ router.get("/files/:fileName", (req, res) => {
 //       const diff = getSentenceDiff(source, data);
 //       const id = hit._id;
 //       let matchPercentage;
-
 //       if (diff === 0) {
 //         matchPercentage = "100%";
 //       } else if (diff === 1) {
@@ -189,76 +271,104 @@ router.get("/files/:fileName", (req, res) => {
 //       }
 //     });
 
-//     return { results };
+//     // return { results };
+//     res.json(results);
 //   } catch (err) {
 //     console.error(err);
 //     throw new Error("An error occurred during the search.");
 //   }
-//  })
+// });
 
 router.post("/searchIndex", async (req, res) => {
-  const { index, data } = req.body;
-
   try {
-    // Flatten the array of arrays to a single string (assuming source should be treated as single string)
-    const searchData = data.map(item => item[0]).join(' ');
+    const { index, query } = req.body;
 
-    console.log('Search Data:', searchData);
+    if (!index || !query) {
+      return res.status(400).json({ error: "Index and query are required" });
+    }
 
     const response = await client.search({
       index,
       body: {
         query: {
           match: {
-            source: searchData
-          }
-        }
-      }
+            source: query,
+          },
+        },
+      },
     });
 
-    const hits = response.body.hits.hits;
-    const results = [];
+    const hits = response.hits.hits;
+    if (hits.length === 0) {
+      return res.status(200).json({ message: "No data found" });
+    }
+    const results = hits.map((hit) => {
+      const { source, target } = hit._source;
+      const id = hit._id;
+      const diff = getSentenceDiff(source, query);
+      let matchPercentage;
 
-    hits.forEach((hit) => {
-      const source = hit._source.source;
-      const target = hit._source.target;
-      // Add your logic for calculating matchPercentage here
-      const matchPercentage = "TODO";
+      if (diff === 0) {
+        matchPercentage = "100%";
+      } else if (diff === 1) {
+        matchPercentage = "99-95%";
+      } else if (diff === 2) {
+        matchPercentage = "90-95%";
+      } else if (diff === 3) {
+        matchPercentage = "85-90%";
+      } else {
+        matchPercentage = "Less than 85%";
+      }
 
-      results.push({
-        id: hit._id,
+      return {
+        id,
         source,
         target,
-        matchPercentage
-      });
+        matchPercentage,
+      };
     });
 
-    console.log('Search Results:', results);
+    // Sort results to ensure exact matches come first
+    const sortedResults = results.sort((a, b) => {
+      if (a.matchPercentage === "100%") return -1;
+      if (b.matchPercentage === "100%") return 1;
+      return 0;
+    });
 
-    return res.json({ results });
+    res.json(sortedResults);
   } catch (err) {
-    console.error('Elasticsearch search error:', err);
-    return res.status(500).json({ error: "An error occurred during the search." });
+    console.error(err);
+    res.status(500).json({ error: "An error occurred during the search." });
   }
 });
 
-
-router.post('/createIndex', async (req, res) => {
-  const { indexName, settings, mappings } = req.body.index;
-
+router.delete("/delete", async (req, res) => {
+  const { index } = req.body;
+  if (!index) {
+    return res.status(400).json({ error: "Index name is required" });
+  }
   try {
-      const response = await client.indices.create({
-          index: indexName,
-          body: {
-              settings,
-              mappings
-          }
-      });
-      console.log(`Index "${indexName}" created`, response);
-      res.status(200).json({ message: `Index "${indexName}" created`, response });
+    const { body } = await client.deleteByQuery({
+      index: index,
+      body: {
+        query: {
+          match_all: {},
+        },
+      },
+    });
+
+    console.log(`All documents deleted from index "${index}"`, body);
+    res.status(200).json({
+      message: `All documents deleted from index "${index}"`,
+      response: body,
+    });
   } catch (error) {
-      console.error(`Error creating index "${indexName}":`, error);
-      res.status(500).json({ error: `Error creating index "${indexName}"`, message: error.message });
+    console.error(`Error deleting documents from index "${index}":`, error);
+    res.status(500).json({
+      error: `Error deleting documents from index "${index}"`,
+      message: error.message,
+    });
   }
 });
+
 module.exports = router;
