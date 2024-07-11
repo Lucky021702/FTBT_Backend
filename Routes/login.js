@@ -59,13 +59,16 @@ router.post("/authenticate", async (req, res) => {
     }
     console.log(user);
     const token = jwt.sign(
-      { userId: user._id, name: user.name , department: user.department },
+      { userId: user._id, name: user.name , department: user.department, id : user.userId },
       process.env.JWT_SECRET
     );
     return res.status(200).json({
       token,
       email: user.email,
       _id: user._id,
+      userId: user.userId,
+      name: user.name,
+      department: user.department,
     });
   } catch (error) {
     console.log("Error authenticating user:", error);
@@ -82,15 +85,5 @@ router.get("/users", async (req, res) => {
   }
 });
 
-// router.post("/projects", async (req, res) => {
-//   try {
-//     const { name, userId } = req.body;
-//     const project = await Project.create({ name, userId });
-//     res.status(201).json(project);
-//   } catch (error) {
-//     console.error("Error creating project:", error);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// });
 
 module.exports = router;
