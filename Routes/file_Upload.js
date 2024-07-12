@@ -287,22 +287,6 @@ router.post("/fileData", async (req, res) => {
     res.status(500).json({ error: "Failed to add data in FileSchema" });
   }
 });
-  
-// router.post("/fileData", async (req, res) => {
-//   try {
-//     const { index, Source, Target } = req.body; 
-//     const file = new File({
-//       index,
-//       Source, 
-//       Target 
-//     });
-//     let fileData = await file.save();
-//     res.status(200).json(fileData);
-//   } catch (error) {
-//     console.error("Error adding data in FileSchema", error);
-//     res.status(500).json({ error: "Failed to add data in FileSchema" });
-//   }
-// });
 
 router.put("/updateTargetAtIndex", async (req, res) => {
   try {
@@ -332,6 +316,22 @@ router.put("/updateTargetAtIndex", async (req, res) => {
   }
 });
 
+router.get("/qcFileData/:index", async (req, res) => {
+  try {
+    const { index } = req.params;
 
+    // Check if a document with the same index already exists
+    let existingFile = await File.findOne({ index });
+
+    if (existingFile) {
+      res.status(200).json(existingFile);
+    }else{
+      res.status(400).json({message: "No file found"});
+    }
+  } catch (error) {
+    console.error("Error adding data in FileSchema", error);
+    res.status(500).json({ error: "Failed to add data in FileSchema" });
+  }
+});
 
 module.exports = router;
