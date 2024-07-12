@@ -14,7 +14,7 @@ router.post("/send", async (req, res) => {
       toReceiver,
       message,
       timestamp: new Date(),
-      seen:false
+      // seen:false
     });
     await newMessage.save();
     res.status(201).json({ message: message });

@@ -59,13 +59,16 @@ router.post("/authenticate", async (req, res) => {
     }
     console.log(user);
     const token = jwt.sign(
-      { userId: user._id, name: user.name , department: user.department },
+      { userId: user._id, name: user.name , department: user.department, id : user.userId },
       process.env.JWT_SECRET
     );
     return res.status(200).json({
       token,
       email: user.email,
       _id: user._id,
+      userId: user.userId,
+      name: user.name,
+      department: user.department,
     });
   } catch (error) {
     console.log("Error authenticating user:", error);

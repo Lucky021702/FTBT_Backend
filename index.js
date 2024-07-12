@@ -11,10 +11,10 @@ const chatRoute = require("./Routes/Chat");
 const Projects = require("./Routes/Projects");
 const login = require("./Routes/login");
 const fileUpload = require("./Routes/file_Upload");
+const File = require("./models/FileData"); // Adjust the path as necessary
 const language = require("./Routes/Language");
 const server = http.createServer(app);
 const path = require("path");
-
 const io = socketIo(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -24,13 +24,18 @@ const io = socketIo(server, {
 
 app.use(cors());
 
+// io.on('connection', (socket) => {
+//   console.log('a user connected');
+// });
+
+
 // Socket.IO connection
 io.on("connection", (socket) => {
   // console.log("New client connected");
   // Join the user-specific room
   socket.on("joinRoom", (email) => {
     socket.join(email);
-    console.log(`${email} joined the room`);
+    // console.log(`${email} joined the room`);
   });
   socket.on("sendMessage", async (message) => {
     const chatMessage = new ChatMessage(message);
@@ -65,6 +70,38 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.set("io", io);
 
 app.get("/", async (req, res) => res.send("<h1>Connected ...</h1>"));
+
+app.put("/updateTargetAtIndex", async (req, res) => {
+  try {
+    const { index, targetIndex, newValue } = req.body;
+    // Validate input
+    if (!index || targetIndex === undefined || typeof newValue !== 'string') {
+      return res.status(400).json({ error: "Invalid input" });
+    }
+    // Update the document directly in MongoDB using findOneAndUpdate
+    const updatedFile = await File.findOneAndUpdate(
+      { index },
+      { $set: { [`Target.${targetIndex}`]: newValue } },
+      { new: true } // To return the updated document
+    );
+
+    // Check if file exists
+    if (!updatedFile) {
+      return res.status(404).json({ error: "File with the given index not found" });
+    }
+    io.emit('target-updated',{
+      index,
+      source: updatedFile.Source[targetIndex],
+      target: newValue
+    });
+
+    res.status(200).json(updatedFile);
+  } catch (error) {
+    console.error("Error updating Target field", error);
+    res.status(500).json({ error: "Failed to update Target field" });
+  }
+});
+
 
 server.listen(PORT, async () => {
   await dbConnect();

@@ -7,7 +7,7 @@ const { ObjectId } = require('mongodb');
 
 router.post("/createProject", async (req, res) => {
   try {
-    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy,domain,index } = req.body;
+    const { projectName, email, tmxUpload, sourceUpload, sourceLanguage, targetLanguage,assignedBy,domain,index,userId } = req.body;
     if (!email) {
       return res.status(400).json({
         error: "Email is required",
@@ -51,18 +51,12 @@ router.post("/createProject", async (req, res) => {
         error: "At least one target language is required",
       });
     }
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({
-        error: "User not found",
-        details: `User with email ${email} not found`,
-      });
-    }
 
+    
     const newProject = new Project({
       projectName,
       assignedBy,
-      userId: user._id,
+      userId,
       status: "init",
       sourceUpload: sourceUpload || [],
       tmxUpload: tmxUpload || [],
@@ -101,21 +95,7 @@ module.exports = router;
 
 router.get("/projects", async (req, res) => {
   try {
-    const { email } = req.query;
-    if (!email) {
-      return res.status(400).json({
-        error: "Email not provided",
-        details: "User email is required to fetch projects",
-      });
-    }
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({
-        error: "User not found",
-        details: `User with email ${email} not found`,
-      });
-    }
-    const projects = await Project.find({ userId: user._id });
+    const projects = await Project.find();
     res.status(200).json(projects);
   } catch (error) {
     res
@@ -323,6 +303,7 @@ router.post("/projects/:department", async (req, res) => {
 //     res.status(500).send(error);
 //   }
 // });
+
 router.post('/updateAssignStatus', async (req, res) => {
   try {
     const { taskId, assignedStatus } = req.body;
@@ -402,6 +383,7 @@ router.post('/Find', async (req, res) => {
         targetLanguage: { $first: "$targetLanguage" },
         sourceLanguage: { $first: "$sourceLanguage" },
         tasks: { $push: "$tasks" },
+        index: { $first: "$index" },
         createdAt: { $first: "$createdAt" },
         updatedAt: { $first: "$updatedAt" },
         index:{ $first: "$index" },
