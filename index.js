@@ -28,7 +28,6 @@ app.use(cors());
 //   console.log('a user connected');
 // });
 
-
 // Socket.IO connection
 io.on("connection", (socket) => {
   // console.log("New client connected");
@@ -43,6 +42,21 @@ io.on("connection", (socket) => {
     io.to(message.toSender)
       .to(message.toReceiver)
       .emit("receiveMessage", chatMessage);
+  });
+  // Handle the updateTarget event
+  socket.on("updateTarget", async (fileId, newTargets) => {
+    try {
+      // Update the Target field in the database
+      const updatedFile = await File.findByIdAndUpdate(
+        { Target: newTargets },
+       
+      );
+
+      // Emit the updated file to all connected clients
+      io.emit("targetUpdated", updatedFile); // Emit the update to all clients
+    } catch (error) {
+      console.error("Error updating Target:", error);
+    }
   });
   socket.on("disconnect", () => {
     // console.log("Client disconnected");
@@ -75,7 +89,7 @@ app.put("/updateTargetAtIndex", async (req, res) => {
   try {
     const { index, targetIndex, newValue } = req.body;
     // Validate input
-    if (!index || targetIndex === undefined || typeof newValue !== 'string') {
+    if (!index || targetIndex === undefined || typeof newValue !== "string") {
       return res.status(400).json({ error: "Invalid input" });
     }
     // Update the document directly in MongoDB using findOneAndUpdate
@@ -87,12 +101,12 @@ app.put("/updateTargetAtIndex", async (req, res) => {
 
     // Check if file exists
     if (!updatedFile) {
-      return res.status(404).json({ error: "File with the given index not found" });
+      return res
+        .status(404)
+        .json({ error: "File with the given index not found" });
     }
-    io.emit('target-updated',{
-      index,
-      source: updatedFile.Source[targetIndex],
-      target: newValue
+    io.emit("target-updated", {
+     updatedFile
     });
 
     res.status(200).json(updatedFile);
@@ -102,6 +116,21 @@ app.put("/updateTargetAtIndex", async (req, res) => {
   }
 });
 
+app.get("/qcFileData/:index", async (req, res) => {
+  try {
+    const { index } = req.params;
+    const existingFile = await File.findOne({ index });
+
+    if (existingFile) {
+      res.status(200).json(existingFile);
+    } else {
+      res.status(400).json({ message: "No file found" });
+    }
+  } catch (error) {
+    console.error("Error fetching file", error);
+    res.status(500).json({ error: "Failed to fetch file" });
+  }
+});
 
 server.listen(PORT, async () => {
   await dbConnect();

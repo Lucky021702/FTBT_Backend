@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 let fileSchema = new mongoose.Schema({
-  index: { type: String},
+  index: { type: String },
   Source: { type: [String] },
   Target: { type: [String] },
   Comment: { type: [String] },
