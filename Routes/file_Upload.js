@@ -288,33 +288,33 @@ router.post("/fileData", async (req, res) => {
   }
 });
 
-router.put("/updateTargetAtIndex", async (req, res) => {
-  try {
-    const { index, targetIndex, newValue } = req.body;
+// router.put("/updateTargetAtIndex", async (req, res) => {
+//   try {
+//     const { index, targetIndex, newValue } = req.body;
 
-    // Validate input
-    if (!index || targetIndex === undefined || typeof newValue !== 'string') {
-      return res.status(400).json({ error: "Invalid input" });
-    }
+//     // Validate input
+//     if (!index || targetIndex === undefined || typeof newValue !== 'string') {
+//       return res.status(400).json({ error: "Invalid input" });
+//     }
 
-    // Update the document directly in MongoDB using findOneAndUpdate
-    const updatedFile = await File.findOneAndUpdate(
-      { index },
-      { $set: { [`Target.${targetIndex}`]: newValue } },
-      { new: true } // To return the updated document
-    );
+//     // Update the document directly in MongoDB using findOneAndUpdate
+//     const updatedFile = await File.findOneAndUpdate(
+//       { index },
+//       { $set: { [`Target.${targetIndex}`]: newValue } },
+//       { new: true } // To return the updated document
+//     );
 
-    // Check if file exists
-    if (!updatedFile) {
-      return res.status(404).json({ error: "File with the given index not found" });
-    }
+//     // Check if file exists
+//     if (!updatedFile) {
+//       return res.status(404).json({ error: "File with the given index not found" });
+//     }
 
-    res.status(200).json(updatedFile);
-  } catch (error) {
-    console.error("Error updating Target field", error);
-    res.status(500).json({ error: "Failed to update Target field" });
-  }
-});
+//     res.status(200).json(updatedFile);
+//   } catch (error) {
+//     console.error("Error updating Target field", error);
+//     res.status(500).json({ error: "Failed to update Target field" });
+//   }
+// });
 
 router.get("/qcFileData/:index", async (req, res) => {
   try {
