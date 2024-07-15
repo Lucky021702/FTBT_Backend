@@ -319,19 +319,23 @@ router.post("/fileData", async (req, res) => {
 router.get("/qcFileData/:index", async (req, res) => {
   try {
     const { index } = req.params;
+    console.log(`Received request for index: ${index}`);
 
     // Check if a document with the same index already exists
     let existingFile = await File.findOne({ index });
+    console.log(`Existing file: ${existingFile}`);
 
     if (existingFile) {
       res.status(200).json(existingFile);
-    }else{
-      res.status(400).json({message: "No file found"});
+    } else {
+      res.status(400).json({ message: "No file found" });
     }
   } catch (error) {
-    console.error("Error adding data in FileSchema", error);
-    res.status(500).json({ error: "Failed to add data in FileSchema" });
+    console.error("Error retrieving data from FileSchema", error);
+    res.status(500).json({ error: "Failed to retrieve data from FileSchema" });
   }
 });
+
+
 
 module.exports = router;
