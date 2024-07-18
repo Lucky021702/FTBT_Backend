@@ -411,4 +411,45 @@ router.post('/Find', async (req, res) => {
 });
 
 
+router.post('/notificationCount', async (req, res) => {
+    try {
+      const { name, serviceType } = req.body;
+  
+      const result = await Project.aggregate([
+        { $match: { status: "In Progress", "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+        { $unwind: "$tasks" },
+        { $match: { "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+        { $group: {
+          _id: "$_id",
+          tasks: { $push: "$tasks" },
+          __v: { $first: "$__v" }
+        }},
+        { $addFields: {
+          acceptedTaskCount: {
+            $size: {
+              $filter: {
+                input: "$tasks",
+                as: "task",
+                cond: { $eq: ["$$task.assignedStatus", "Accept"] }
+              }
+            }
+          }
+        }},
+        { $group: {
+          _id: null,
+          totalAcceptedTaskCount: { $sum: "$acceptedTaskCount" }
+        }}
+      ]);
+  
+      if (result.length === 0) {
+        return res.status(404).json({ message: "No matching project found" });
+      }
+  
+      res.json({ totalAcceptedTaskCount: result[0].totalAcceptedTaskCount }); // Return the total number of accepted tasks
+    } catch (error) {
+      console.error("Error finding projects:", error);
+      res.status(500).json({ message: "Error finding projects" });
+    }
+  });
+
 module.exports = router;
