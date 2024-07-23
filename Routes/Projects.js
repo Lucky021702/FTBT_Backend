@@ -205,45 +205,6 @@ function parseDate(dateString) {
 
   return dateObject;
 }
-// router.put("/projects/:id/tasksUpdate", async (req, res) => {
-//   const projectId = req.params.id;
-//   const { tasks } = req.body;
-
-//   try {
-//     if (!Array.isArray(tasks)) {
-//       return res.status(400).json({ error: "Tasks should be an array" });
-//     }
-    
-//     const project = await Project.findById(projectId);
-//     if (!project) {
-//       return res.status(404).json({ error: "Project not found" });
-//     }
-    
-//     tasks.forEach((newTask) => {
-//       const existingTaskIndex = project.tasks.findIndex(
-//         (task) => task._id === newTask._id
-//       );
-//       if (existingTaskIndex !== -1) {
-//         project.tasks[existingTaskIndex] = newTask;
-//       } else {
-//         project.tasks.push({ ...newTask, index: project.tasks.length });
-//       }
-//     });
-    
-//     project.status = "In Progress";
-
-//     // Set updatedAt to current date and time in UTC
-//     const currentUtcDate = new Date().toISOString();
-//     project.updatedAt = currentUtcDate;
-
-//     const updatedProject = await project.save();
-//     res.status(200).json(updatedProject);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Server error" });
-//   }
-// });
-
 
 router.delete("/projects/:id", async (req, res) => {
   try {
@@ -275,38 +236,7 @@ router.post("/projects/:department", async (req, res) => {
   }
 });
 
-// router.post('/updateAssignStatus', async (req, res) => {
-//   try {
-//     const { name, assignedStatus } = req.body; // Assuming status is provided in the request body
- 
-//     // Find projects where tasks have the specified assignTo name and status is "In Progress"
-//     const projects = await Project.find({
-//       status: "In Progress",
-//       "tasks.assignTo": name
-//     });
- 
-//     // Iterate through each project to update the assignedStatus
-//     for (let i = 0; i < projects.length; i++) {
-//       const project = projects[i];
-//       console.log("project",project);
-     
-//       // Filter tasks in the project that match the assignToName and update assignedStatus
-//      project.tasks.forEach(task => {
-//         if (task.assignTo === name) {
-//           task.assignedStatus = assignedStatus; // Update assignedStatus field
-//         }
-//       });
- 
-//       // Save the updated project back to the database
-//       await project.save();
-//     }
- 
-//     res.status(200).json({ message: "Tasks updated successfully" });
-//   } catch (error) {
-//     console.error("Error updating tasks:", error);
-//     res.status(500).send(error);
-//   }
-// });
+
 router.post('/updateAssignStatus', async (req, res) => {
   try {
     const { taskId, assignedStatus } = req.body; // Assuming taskId and assignedStatus are provided in the request body
@@ -338,41 +268,7 @@ router.post('/updateAssignStatus', async (req, res) => {
   }
 });
 
-// router.post('/Find', async (req, res) => {
-//   try {
-//     const { name, serviceType } = req.body;
 
-//     const projects = await Project.aggregate([
-//       { $match: { status: "In Progress", "tasks.assignTo": name, "tasks.serviceType": serviceType } },
-//       { $unwind: "$tasks" },
-//       { $match: { "tasks.assignTo": name, "tasks.serviceType": serviceType } },
-//       { $group: {
-//         _id: "$_id",
-//         projectName: { $first: "$projectName" },
-//         assignedBy: { $first: "$assignedBy" },
-//         userId: { $first: "$userId" },
-//         status: { $first: "$status" },
-//         sourceUpload: { $first: "$sourceUpload" },
-//         tmxUpload: { $first: "$tmxUpload" },
-//         targetLanguage: { $first: "$targetLanguage" },
-//         sourceLanguage: { $first: "$sourceLanguage" },
-//         tasks: { $push: "$tasks" },
-//         createdAt: { $first: "$createdAt" },
-//         updatedAt: { $first: "$updatedAt" },
-//         __v: { $first: "$__v" }
-//       }}
-//     ]);
-
-//     if (projects.length === 0) {
-//       return res.status(404).json({ message: "No matching project found" });
-//     }
-
-//     res.json(projects[0]); // Assuming you only expect one project to match
-//   } catch (error) {
-//     console.error("Error finding project:", error);
-//     res.status(500).json({ message: "Error finding project" });
-//   }
-// });
 router.post('/Find', async (req, res) => {
   try {
     const { name, serviceType } = req.body;
@@ -412,44 +308,47 @@ router.post('/Find', async (req, res) => {
 
 
 router.post('/notificationCount', async (req, res) => {
-    try {
-      const { name, serviceType } = req.body;
-  
-      const result = await Project.aggregate([
-        { $match: { status: "In Progress", "tasks.assignTo": name, "tasks.serviceType": serviceType } },
-        { $unwind: "$tasks" },
-        { $match: { "tasks.assignTo": name, "tasks.serviceType": serviceType } },
-        { $group: {
-          _id: "$_id",
-          tasks: { $push: "$tasks" },
-          __v: { $first: "$__v" }
-        }},
-        { $addFields: {
-          acceptedTaskCount: {
-            $size: {
-              $filter: {
-                input: "$tasks",
-                as: "task",
-                cond: { $eq: ["$$task.assignedStatus", "Accept"] }
-              }
+  try {
+    const { name, serviceType } = req.body;
+
+    const result = await Project.aggregate([
+      { $match: { status: "In Progress", "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+      { $unwind: "$tasks" },
+      { $match: { "tasks.assignTo": name, "tasks.serviceType": serviceType } },
+      { $group: {
+        _id: "$_id",
+        tasks: { $push: "$tasks" },
+        __v: { $first: "$__v" }
+      }},
+      { $addFields: {
+        acceptedTaskCount: {
+          $size: {
+            $filter: {
+              input: "$tasks",
+              as: "task",
+              cond: { $or: [
+                { $not: { $in: ["$$task.assignedStatus", ["Accept", "Reject"]] } }
+              ]}
             }
           }
-        }},
-        { $group: {
-          _id: null,
-          totalAcceptedTaskCount: { $sum: "$acceptedTaskCount" }
-        }}
-      ]);
-  
-      if (result.length === 0) {
-        return res.status(404).json({ message: "No matching project found" });
-      }
-  
-      res.json({ totalAcceptedTaskCount: result[0].totalAcceptedTaskCount }); // Return the total number of accepted tasks
-    } catch (error) {
-      console.error("Error finding projects:", error);
-      res.status(500).json({ message: "Error finding projects" });
+        }
+      }},
+      { $group: {
+        _id: null,
+        totalAcceptedTaskCount: { $sum: "$acceptedTaskCount" }
+      }}
+    ]);
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No matching project found" });
     }
-  });
+
+    res.json({ totalAcceptedTaskCount: result[0].totalAcceptedTaskCount }); // Return the total number of accepted tasks
+  } catch (error) {
+    console.error("Error finding projects:", error);
+    res.status(500).json({ message: "Error finding projects" });
+  }
+});
+
 
 module.exports = router;

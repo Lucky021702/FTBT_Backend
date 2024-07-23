@@ -172,28 +172,124 @@ router.post("/add", async (req, res) => {
     });
   }
 });
-function getSentenceDiff(sent1, sent2) {
-  let sentArr1 = sent1.split(" ");
-  let sentArr2 = sent2.split(" ");
-  let referenceSentence =
-    sentArr1.length > sentArr2.length ? sentArr1 : sentArr2;
-  let diffCount = 0;
+// function getSentenceDiff(sent1, sent2) {
+//   let sentArr1 = sent1.split(" ");
+//   let sentArr2 = sent2.split(" ");
+//   let referenceSentence =
+//     sentArr1.length > sentArr2.length ? sentArr1 : sentArr2;
+//   let diffCount = 0;
  
-  for (let i = 0; i < referenceSentence.length; i++) {
-    if (sentArr1[i] !== undefined && sentArr2[i] !== undefined) {
-      if (sentArr1[i] !== sentArr2[i]) {
-        diffCount++;
+//   for (let i = 0; i < referenceSentence.length; i++) {
+//     if (sentArr1[i] !== undefined && sentArr2[i] !== undefined) {
+//       if (sentArr1[i] !== sentArr2[i]) {
+//         diffCount++;
+//       }
+//     } else {
+//       diffCount++;
+//     }
+//   }
+//   return diffCount; 
+// }
+// router.post("/searchIndex", async (req, res) => {
+//   try {
+//     const index = req.body.index;
+//     const data = req.body.query;
+//     const datas = await client.search({
+//       index,
+//       body: {
+//         query: {
+//           match: {
+//             source: data,
+//           },
+//         },
+//       },
+//     });
+//     console.log(datas);
+//     const hits = datas.hits.hits;
+//     const results = [];
+
+//     if (hits.length === 0) {
+//       return res.status(200).json([{ source: 'No data found' }]);
+//     }
+    
+   
+ 
+//     hits.forEach((hit) => {
+//       // console.log(hit)
+//       // console.log(JSON.stringify(hit),"this is hit........................................")
+//       const source = hit._source.source;
+//       const target = hit._source.target;
+//       const diff = getSentenceDiff(source, data);
+//       const id = hit._id;
+//       let matchPercentage;
+ 
+//       if (diff === 0) {
+//         matchPercentage = "100%";
+//       } else if (diff === 1) {
+//         matchPercentage = "99-95%";
+//       } else if (diff === 2) {
+//         matchPercentage = "90-95%";
+//       } else if (diff === 3) {
+//         matchPercentage = "85-90%";
+//       } else {
+//         matchPercentage = "85%";
+//       }
+ 
+//       if (diff === 0) {
+//         results.unshift({
+//           id,
+//           source,
+//           target,
+//           matchPercentage,
+//         });
+//       } else {
+//         results.push({
+//           id,
+//           source,
+//           target,
+//           matchPercentage,
+//         });
+//       }
+//     });
+ 
+//     // return { results };
+//     res.json(results);
+//   } catch (err) {
+//     console.error(err);
+//     throw new Error("An error occurred during the search.");
+//   }
+// });
+
+function getSentenceMatchPercentage(sent1, sent2) {
+  const sentArr1 = sent1.split(" ");
+  const sentArr2 = sent2.split(" ");
+ 
+  const getMatchPercentage = (array1, array2) => {
+    let matchCount = 0;
+    const maxLength = Math.max(array1.length, array2.length);
+ 
+    for (let i = 0; i < maxLength; i++) {
+      if (array1[i] !== undefined && array2[i] !== undefined) {
+        if (array1[i].toLowerCase() === array2[i].toLowerCase()) {
+          matchCount++;
+        }
       }
-    } else {
-      diffCount++;
     }
-  }
-  return diffCount; 
+ 
+    return (matchCount / maxLength) * 100;
+  };
+ 
+  const matchPercentage1 = getMatchPercentage(sentArr1, sentArr2);
+  const matchPercentage2 = getMatchPercentage(sentArr2, sentArr1);
+ 
+  return (matchPercentage1 + matchPercentage2) / 2;
 }
+ 
 router.post("/searchIndex", async (req, res) => {
   try {
     const index = req.body.index;
     const data = req.body.query;
+ 
     const datas = await client.search({
       index,
       body: {
@@ -204,61 +300,38 @@ router.post("/searchIndex", async (req, res) => {
         },
       },
     });
-    console.log(datas);
+ 
     const hits = datas.hits.hits;
     const results = [];
-
+ 
     if (hits.length === 0) {
-      return res.status(200).json([{ source: 'No data found' }]);
+      return res.status(200).json([{ source: "No data found" }]);
     }
-    
-   
  
     hits.forEach((hit) => {
-      // console.log(hit)
-      // console.log(JSON.stringify(hit),"this is hit........................................")
       const source = hit._source.source;
       const target = hit._source.target;
-      const diff = getSentenceDiff(source, data);
+      const matchPercentage = getSentenceMatchPercentage(source, data).toFixed(2); // toFixed for consistency
       const id = hit._id;
-      let matchPercentage;
  
-      if (diff === 0) {
-        matchPercentage = "100%";
-      } else if (diff === 1) {
-        matchPercentage = "99-95%";
-      } else if (diff === 2) {
-        matchPercentage = "90-95%";
-      } else if (diff === 3) {
-        matchPercentage = "85-90%";
-      } else {
-        matchPercentage = "85%";
-      }
- 
-      if (diff === 0) {
-        results.unshift({
-          id,
-          source,
-          target,
-          matchPercentage,
-        });
-      } else {
-        results.push({
-          id,
-          source,
-          target,
-          matchPercentage,
-        });
-      }
+      results.push({
+        id,
+        source,
+        target,
+        matchPercentage: `${matchPercentage}%`,
+      });
     });
  
-    // return { results };
+    // Sort results if needed, for example by match percentage
+    results.sort((a, b) => b.matchPercentage - a.matchPercentage);
+ 
     res.json(results);
   } catch (err) {
     console.error(err);
-    throw new Error("An error occurred during the search.");
+    res.status(500).send("An error occurred during the search.");
   }
 });
+
 router.post("/fileData", async (req, res) => {
   try {
     const { index, Source } = req.body;
